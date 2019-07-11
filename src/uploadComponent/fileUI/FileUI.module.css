@@ -1,0 +1,43 @@
+.root {
+    flex-grow: 1;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.mainGrid {
+    flex-wrap: nowrap !important;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5px;
+}
+
+.button {
+    margin-left: 5px !important;
+}
+
+.paper {
+    padding: 2px;
+    margin: auto;
+    max-width: 500px;
+}
+
+.filename {
+    word-break: break-all;
+}
+
+.image {
+    display: flex;
+    margin-left: 5px;
+    width: 128px;
+    height: 128px;
+}
+
+.img {
+    margin: auto;
+    display: block;
+    max-width: 128px;
+    max-height: 128px;
+}
