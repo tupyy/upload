@@ -13,7 +13,7 @@ export default class FileUI extends React.Component {
         this.state = {
             file: null,
             uploading: false,
-            completed: 20,
+            completed: 0,
 
         };
     }

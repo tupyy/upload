@@ -2,17 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6195a610-e63a-4a3f-ab09-ba27271841c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Clock.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Upload.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/uploadComponent/UploadPhoto.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/MainController/MainController.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/MainController/MainController.style.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Upload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/uploadComponent/UploadPhoto.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FileUIContainer/FileUIContainer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FileUIContainer/FileUI/FileUI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/FileUIContainer/FileUI/FileUI.module.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -28,8 +25,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+            <state relative-caret-position="168">
+              <caret line="8" column="73" selection-start-line="8" selection-start-column="73" selection-end-line="8" selection-end-column="73" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
               </folding>
@@ -37,37 +34,44 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.js">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/components/MainController/MainController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+            <state relative-caret-position="357">
+              <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
               <folding>
-                <element signature="e#0#54#0" expanded="true" />
+                <element signature="e#78#124#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.module.css">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/MainController/MainController.style.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="147">
-              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+            <state relative-caret-position="189">
+              <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="http://localhost:3000/static/js/bundle.js">
-          <provider selected="true" editor-type-id="httpFileEditor" />
+        <entry file="file://$PROJECT_DIR$/src/components/FileUIContainer/FileUIContainer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Upload.js">
+        <entry file="file://$PROJECT_DIR$/src/components/FileUIContainer/FileUI/FileUI.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-column="31" />
+            <state relative-caret-position="630">
+              <caret line="48" column="42" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="48" selection-end-column="42" />
+              <folding>
+                <element signature="e#0#54#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -94,12 +98,17 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/Clock.js" />
-        <option value="$PROJECT_DIR$/src/Upload.js" />
-        <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/uploadComponent/UploadPhoto.js" />
         <option value="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.css" />
-        <option value="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.js" />
         <option value="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.module.css" />
+        <option value="$PROJECT_DIR$/src/Upload.js" />
+        <option value="$PROJECT_DIR$/src/uploadComponent/UploadPhoto.js" />
+        <option value="$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.js" />
+        <option value="$PROJECT_DIR$/src/components/MainControl/MainController.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/components/FileUIContainer/FileUIContainer.js" />
+        <option value="$PROJECT_DIR$/src/components/MainController/MainController.module.css" />
+        <option value="$PROJECT_DIR$/src/components/MainController/MainController.style.js" />
+        <option value="$PROJECT_DIR$/src/components/MainController/MainController.js" />
       </list>
     </option>
   </component>
@@ -136,14 +145,29 @@
               <item name="react1" type="b2602c69:ProjectViewProjectNode" />
               <item name="react1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="uploadComponent" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="react1" type="b2602c69:ProjectViewProjectNode" />
               <item name="react1" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="uploadComponent" type="462c0819:PsiDirectoryNode" />
-              <item name="fileUI" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="FileUIContainer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="FileUIContainer" type="462c0819:PsiDirectoryNode" />
+              <item name="FileUI" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react1" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="MainController" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -163,6 +187,11 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/fileUIContainer" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -206,12 +235,20 @@
       <option name="presentableId" value="Default" />
       <updated>1562679530777</updated>
       <workItem from="1562679531982" duration="1008000" />
-      <workItem from="1562737232361" duration="15801000" />
+      <workItem from="1562737232361" duration="21058000" />
     </task>
+    <task id="LOCAL-00001" summary="initial commit">
+      <created>1562846889133</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1562846889133</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16809000" />
+    <option name="totallyTimeSpent" value="22066000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1680" y="0" width="1680" height="1014" extended-state="6" />
@@ -240,6 +277,10 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="initial commit" />
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="evaluateExpression">
@@ -289,16 +330,6 @@
     <entry file="http://localhost:3000/static/js/bundle.js">
       <provider selected="true" editor-type-id="httpFileEditor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="12" column="19" lean-forward="true" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/@types/react/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -306,34 +337,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/uploadComponent/UploadPhoto.js">
+    <entry file="file://$PROJECT_DIR$/src/components/FileUIContainer/FileUI/FileUI.module.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="183">
-          <caret line="15" column="37" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="37" />
+        <state relative-caret-position="372">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Upload.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-column="31" />
+        <state relative-caret-position="378">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.js">
+    <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="30" column="55" lean-forward="true" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+        <state>
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/FileUIContainer/FileUI/FileUI.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="48" column="42" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="48" selection-end-column="42" />
           <folding>
             <element signature="e#0#54#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/uploadComponent/fileUI/FileUI.module.css">
+    <entry file="file://$PROJECT_DIR$/src/App.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        <state relative-caret-position="168">
+          <caret line="8" column="73" selection-start-line="8" selection-start-column="73" selection-end-line="8" selection-end-column="73" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/FileUIContainer/FileUIContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/MainController/MainController.style.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/MainController/MainController.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="18" column="36" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="36" />
+          <folding>
+            <element signature="e#78#124#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

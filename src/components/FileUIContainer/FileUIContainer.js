@@ -1,7 +1,7 @@
-import FileUI from './fileUI/FileUI';
+import FileUI from './FileUI/FileUI';
 const React = require('react');
 
-export default class UploadPhoto extends React.Component {
+export default class FileUIContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,21 +12,23 @@ export default class UploadPhoto extends React.Component {
     }
 
     handleChange(event) {
-        const file = event.target.files[0];
-        this.setState(prevState => ({
+        let newFiles = Array.from(event.target.files);
+        newFiles.forEach( (element, index, array) => {
+            const file = element;
+            this.setState(prevState => ({
                 files: [...prevState.files, {
                     id: prevState.counter + 1,
                     name: file.name,
                     blob: URL.createObjectURL(file)
                 }],
                 counter: prevState.counter + 1
-        }));
+            }));
+        })
     }
 
     render() {
         return (
             <div>
-                <input type="file" onChange={this.handleChange}/>
                 <div>
                     {this.state.files.map(file => (
                       <FileUI key={file.id} file={file}/>

@@ -1,11 +1,13 @@
 import React from 'react';
 import './App.css';
-import UploadPhoto from './uploadComponent/UploadPhoto';
+import FileUIContainer from './components/FileUIContainer/FileUIContainer';
+import MainController from "./components/MainController/MainController";
 
 function App() {
   return (
     <div>
-        <UploadPhoto/>
+        <MainController uploadStarted={false} stopActionLabel={"Stop"} />
+        <FileUIContainer/>
     </div>
   );
 }
