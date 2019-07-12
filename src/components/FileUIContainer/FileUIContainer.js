@@ -1,40 +1,27 @@
 import FileUI from './FileUI/FileUI';
-const React = require('react');
+import React from 'react';
+import {connect} from "react-redux";
 
-export default class FileUIContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            counter: 0,
-            files: []
-        };
-        this.handleChange = this.handleChange.bind(this);
-    }
-
-    handleChange(event) {
-        let newFiles = Array.from(event.target.files);
-        newFiles.forEach( (element, index, array) => {
-            const file = element;
-            this.setState(prevState => ({
-                files: [...prevState.files, {
-                    id: prevState.counter + 1,
-                    name: file.name,
-                    blob: URL.createObjectURL(file)
-                }],
-                counter: prevState.counter + 1
-            }));
-        })
-    }
+class FileUIContainer extends React.Component {
 
     render() {
         return (
             <div>
                 <div>
-                    {this.state.files.map(file => (
-                      <FileUI key={file.id} file={file}/>
-                    ))}
+                    {this.props.filesState.files && this.props.filesState.files.length
+                            ? this.props.filesState.files.map(file => (
+                                <FileUI key={file.id} file={file}/>))
+                            : "Add some files"
+                    }
                 </div>
             </div>
         );
     }
 }
+
+const mapStateToProps = state => {
+    const filesState = state.files;
+    return {filesState};
+};
+
+export default connect(mapStateToProps)(FileUIContainer)

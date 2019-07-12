@@ -4,18 +4,19 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
+import {DELETE_FILE} from "../../../redux/actionTypes";
+import {connect} from "react-redux";
 
 const React = require('react');
 
-export default class FileUI extends React.Component {
+ class FileUI extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            file: null,
-            uploading: false,
-            completed: 0,
+        this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
+    }
 
-        };
+    handleDeleteButtonClick(event) {
+        this.props.deleteFile(this.props.file.id);
     }
 
     render() {
@@ -25,7 +26,7 @@ export default class FileUI extends React.Component {
                     <Grid container spacing={2} className={style.mainGrid}>
                         <Grid item>
                             <div className={style.image}>
-                                <img className={style.img} alt="complex" src={this.props.file.blob} />
+                                <img className={style.img} alt="complex" src={this.props.file.file} />
                             </div>
                         </Grid>
                         <Grid item xs={12} sm container>
@@ -35,7 +36,7 @@ export default class FileUI extends React.Component {
                                         {this.props.file.name}
                                     </Typography>
                                     <div className={style.progressBar}>
-                                        <LinearProgress variant="determinate" value={this.state.completed} />
+                                        <LinearProgress variant="determinate" value={this.props.file.completed} />
                                     </div>
                                 </Grid>
                                 <Grid item>
@@ -43,7 +44,9 @@ export default class FileUI extends React.Component {
                                         <Button variant="contained" color="primary" className={style.button}>
                                             Upload
                                         </Button>
-                                        <Button variant="contained" color="secondary" className={style.button}>
+                                        <Button variant="contained" color="secondary" className={style.button}
+                                                onClick={this.handleDeleteButtonClick}
+                                        >
                                             Delete
                                         </Button>
                                     </div>
@@ -56,3 +59,11 @@ export default class FileUI extends React.Component {
         );
     }
 }
+
+function mapDispacthToProps(dispatch) {
+    return {
+        deleteFile: (id) => {dispatch({type:DELETE_FILE, id:id})}
+    }
+}
+
+export default connect(null, mapDispacthToProps)(FileUI)
