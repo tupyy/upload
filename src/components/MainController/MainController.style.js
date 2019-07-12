@@ -1,14 +1,19 @@
 // A style sheet
-import {makeStyles} from "@material-ui/core";
 
-const useStyles = makeStyles({
+const styles = theme => ({
     root: {
-
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '10px',
+        marginBottom: '10px'
+    },
+    button: {
+        margin: '2px'
     },
     input: {
-        display: 'none'
+        display: 'none',
     },
 });
 
-export default useStyles;
+export default styles;
 
