@@ -7,7 +7,7 @@ import MainProgressBar from "./components/MainProgressBar/MainProgressBar";
 function App() {
   return (
     <div>
-        <MainController uploadStarted={false} stopActionLabel={"Stop"} />
+        <MainController/>
         <MainProgressBar completed={0}/>
         <FileUIContainer/>
     </div>

@@ -4,7 +4,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import {DELETE_FILE} from "../../../redux/actionTypes";
+import {DELETE_FILE, UPLOAD_FILE} from "../../../redux/actionTypes";
 import {connect} from "react-redux";
 
 const React = require('react');
@@ -18,6 +18,13 @@ const React = require('react');
     handleDeleteButtonClick(event) {
         this.props.deleteFile(this.props.file.id);
     }
+
+     getStopLabel() {
+        if (this.props.uploadAllStarted) {
+            return "Stop";
+        }
+        return "Delete";
+     }
 
     render() {
         return (
@@ -41,13 +48,17 @@ const React = require('react');
                                 </Grid>
                                 <Grid item>
                                     <div className={style.buttonContainer}>
-                                        <Button variant="contained" color="primary" className={style.button}>
+                                        <Button variant="contained"
+                                                color="primary"
+                                                className={style.button}
+                                                disabled={this.props.uploadAllStarted}
+                                        >
                                             Upload
                                         </Button>
                                         <Button variant="contained" color="secondary" className={style.button}
                                                 onClick={this.handleDeleteButtonClick}
                                         >
-                                            Delete
+                                            {this.getStopLabel()}
                                         </Button>
                                     </div>
                                 </Grid>
@@ -62,8 +73,15 @@ const React = require('react');
 
 function mapDispacthToProps(dispatch) {
     return {
-        deleteFile: (id) => {dispatch({type:DELETE_FILE, id:id})}
+        deleteFile: (id) => {dispatch({type:DELETE_FILE, id:id})},
+        uploadFile: (id) => {dispatch({type: UPLOAD_FILE, id:id})}
     }
 }
 
-export default connect(null, mapDispacthToProps)(FileUI)
+const mapStateToProps = state => {
+     return {
+         uploadAllStarted : state.controller.uploadAllStarted
+     }
+};
+
+export default connect(mapStateToProps, mapDispacthToProps)(FileUI)

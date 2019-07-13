@@ -1,8 +1,8 @@
-import {ADD_FILE, DELETE_FILE} from "../actionTypes";
+import {ADD_FILE, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL} from "../actionTypes";
 let count = 0;
 
 const initialState = {
-    files: []
+    files: [],
 };
 
 export default function (state = initialState, action) {
@@ -15,17 +15,28 @@ export default function (state = initialState, action) {
                         id: count++,
                         file: action.file,
                         name: action.name,
-                        completed: 0
+                        completed: 0,
+                        uploadStarted: false
                     }],
             };
         case DELETE_FILE:
-            return deleteFile(state, action.id);
+            return onDeleteFile(state, action.id);
+        case CLEAR_ALL:
+            return initialState;
+        case UPLOAD_ALL:
+            console.log("upload started");
+            break;
         default:
             return state;
     }
 };
 
-function deleteFile(state, id) {
+/**
+ * Handle for delete file action
+ * @param state
+ * @param id fileUI id
+ */
+function onDeleteFile(state, id) {
     let new_state = {};
     Object.assign(new_state, state);
 
@@ -36,4 +47,12 @@ function deleteFile(state, id) {
     });
     // new_state.files = [];
     return new_state;
+}
+
+/**
+ * Handle for onUploadStateChange action
+ * It loops through state and set the uploadStarted to true
+ */
+function onUploadStateChange(state, uploadState = false) {
+
 }
