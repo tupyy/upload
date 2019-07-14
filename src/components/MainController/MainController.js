@@ -1,9 +1,9 @@
-import React, {ReactPropTypes as PropTypes} from 'react';
+import React from 'react';
 import styles from "./MainController.style";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {connect} from "react-redux";
-import {ADD_FILE, CLEAR_ALL, STOP_UPLOAD, UPLOAD_ALL} from "../../redux/actionTypes";
+import {AddFile, CancelAll, ClearAll, UploadAll} from "../../redux/actions";
 
 class MainController extends React.Component {
     constructor(props) {
@@ -12,7 +12,7 @@ class MainController extends React.Component {
         this.inputRef = React.createRef();
         this.handleClick = this.handleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.handleOnStopClick = this.handleOnStopClick.bind(this);
+        this.handleOnCancelClick = this.handleOnCancelClick.bind(this);
     }
 
     handleClick(event) {
@@ -23,14 +23,14 @@ class MainController extends React.Component {
         let newFiles = Array.from(event.target.files);
         newFiles.forEach( (element, index, array) => {
             const file = element;
-            this.props.addFile(URL.createObjectURL(file), file.name);
+            this.props.onAddFile(URL.createObjectURL(file), file.name);
         });
         this.inputRef.current.value = "";
     }
 
-    handleOnStopClick(event) {
-        if (this.props.uploadAllStarted) {
-            this.props.onUploadStop();
+    handleOnCancelClick(event) {
+        if (this.props.uploadState) {
+            this.props.onCancelAllUpload();
         } else {
             this.props.onClearAll();
         }
@@ -55,7 +55,7 @@ class MainController extends React.Component {
                         color="secondary"
                         className={classes.button}
                         disabled={!this.props.canClearAll && !this.props.uploadAllStarted}
-                        onClick={this.handleOnStopClick}
+                        onClick={this.handleOnCancelClick}
                 >
                     {this.props.stopActionLabel}
                 </Button>
@@ -70,17 +70,17 @@ class MainController extends React.Component {
  **/
 function mapDispatchToProps(dispatch) {
     return {
-        addFile: (file,name)=> { dispatch({type: ADD_FILE,file,name})},
-        onStartUpload: () => {dispatch({type:UPLOAD_ALL})},
-        onUploadStop: () => dispatch({type:STOP_UPLOAD}),
-        onClearAll: () => dispatch({type:CLEAR_ALL})
+        onAddFile: (file, name)=> { dispatch(AddFile(file,name))},
+        onStartUpload: () => {dispatch(UploadAll())},
+        onCancelAllUpload: () => dispatch(CancelAll()),
+        onClearAll: () => dispatch(ClearAll())
     }
 }
 
 const mapStateToProps = state => {
     return {
         stopActionLabel: state.controller.stopActionLabel,
-        uploadAllStarted: state.controller.uploadAllStarted,
+        uploadState: state.controller.uploadState,
         canClearAll: state.files.files.length > 0
     };
 };

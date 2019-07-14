@@ -10,7 +10,7 @@ class FileUIContainer extends React.Component {
                 <div>
                     {this.props.filesState.files && this.props.filesState.files.length
                             ? this.props.filesState.files.map(file => (
-                                <FileUI key={file.id} file={file}/>))
+                                <FileUI key={file.id} file={file} uploadState={file.uploadState}/>))
                             : "Add some files"
                     }
                 </div>

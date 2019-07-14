@@ -1,4 +1,4 @@
-import {ADD_FILE, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL} from "../actionTypes";
+import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL} from "../actionTypes";
 let count = 0;
 
 const initialState = {
@@ -16,16 +16,19 @@ export default function (state = initialState, action) {
                         file: action.file,
                         name: action.name,
                         completed: 0,
-                        uploadStarted: false
+                        uploadState: false
                     }],
             };
         case DELETE_FILE:
             return onDeleteFile(state, action.id);
+        case CANCEL_UPLOAD:
+            return onCancelUpload(state, action.id);
         case CLEAR_ALL:
             return initialState;
         case UPLOAD_ALL:
-            console.log("upload started");
-            break;
+            return onUploadStateChange(state, true);
+        case CANCEL_ALL:
+            return onUploadStateChange(state, false);
         default:
             return state;
     }
@@ -40,7 +43,7 @@ function onDeleteFile(state, id) {
     let new_state = {};
     Object.assign(new_state, state);
 
-    new_state.files.forEach((fileEntry,index, array) => {
+    new_state.files.forEach((fileEntry,index) => {
         if (fileEntry.id === id) {
             new_state.files.splice(index,1);
         }
@@ -53,6 +56,30 @@ function onDeleteFile(state, id) {
  * Handle for onUploadStateChange action
  * It loops through state and set the uploadStarted to true
  */
-function onUploadStateChange(state, uploadState = false) {
+function onUploadStateChange(state, uploadState) {
+    let newState = {};
+    Object.assign(newState, state);
+    newState.files.forEach((entry) => {
+        entry.uploadState = uploadState;
+    });
+    return newState;
+}
 
+
+/**
+ * Cancel the upload for a single file
+ * @param state
+ * @param id file id which upload has been cancelled
+ */
+function onCancelUpload(state, id) {
+    let newState = {};
+    Object.assign(newState, state);
+
+    newState.files.forEach((fileEntry) => {
+        if (fileEntry.id === id) {
+            fileEntry.uploadState = false;
+        }
+    });
+    // new_state.files = [];
+    return newState;
 }
