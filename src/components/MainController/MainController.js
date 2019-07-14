@@ -29,7 +29,7 @@ class MainController extends React.Component {
     }
 
     handleOnCancelClick(event) {
-        if (this.props.uploadState) {
+        if (this.props.uploadGlobalState) {
             this.props.onCancelAllUpload();
         } else {
             this.props.onClearAll();
@@ -47,17 +47,17 @@ class MainController extends React.Component {
                 <Button variant="contained" color="primary"
                         className={classes.button}
                         onClick={this.props.onStartUpload}
-                        disabled={this.props.uploadAllStarted || !this.props.canClearAll}
+                        disabled={this.props.uploadGlobalState || !this.props.canClearAll}
                 >
                     Upload
                 </Button>
                 <Button variant="contained"
                         color="secondary"
                         className={classes.button}
-                        disabled={!this.props.canClearAll && !this.props.uploadAllStarted}
+                        disabled={!this.props.canClearAll && !this.props.uploadGlobalState}
                         onClick={this.handleOnCancelClick}
                 >
-                    {this.props.stopActionLabel}
+                    {this.props.uploadGlobalState ? "Cancel" : "Clear all"}
                 </Button>
             </div>
         );
@@ -79,8 +79,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = state => {
     return {
-        stopActionLabel: state.controller.stopActionLabel,
-        uploadState: state.controller.uploadState,
+        uploadGlobalState: state.files.uploadGlobalState,
         canClearAll: state.files.files.length > 0
     };
 };

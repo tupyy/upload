@@ -1,8 +1,10 @@
-import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL} from "../actionTypes";
+import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL, UPLOAD_FILE} from "../actionTypes";
+
 let count = 0;
 
 const initialState = {
     files: [],
+    uploadGlobalState: false
 };
 
 export default function (state = initialState, action) {
@@ -19,6 +21,8 @@ export default function (state = initialState, action) {
                         uploadState: false
                     }],
             };
+        case UPLOAD_FILE:
+            return onUploadFile(state, action.id);
         case DELETE_FILE:
             return onDeleteFile(state, action.id);
         case CANCEL_UPLOAD:
@@ -43,9 +47,9 @@ function onDeleteFile(state, id) {
     let new_state = {};
     Object.assign(new_state, state);
 
-    new_state.files.forEach((fileEntry,index) => {
+    new_state.files.forEach((fileEntry, index) => {
         if (fileEntry.id === id) {
-            new_state.files.splice(index,1);
+            new_state.files.splice(index, 1);
         }
     });
     // new_state.files = [];
@@ -62,6 +66,7 @@ function onUploadStateChange(state, uploadState) {
     newState.files.forEach((entry) => {
         entry.uploadState = uploadState;
     });
+    newState.uploadGlobalState = uploadState;
     return newState;
 }
 
@@ -80,6 +85,35 @@ function onCancelUpload(state, id) {
             fileEntry.uploadState = false;
         }
     });
-    // new_state.files = [];
+
+    if (countUploadingFiles(newState) === 0) {
+        newState.uploadGlobalState = false;
+    }
+    return newState;
+}
+
+function countUploadingFiles(state) {
+
+    let countUploadingFiles = 0;
+    state.files.forEach((fileEntry) => {
+        if (fileEntry.uploadState) {
+            countUploadingFiles++;
+        }
+    });
+    return countUploadingFiles;
+}
+
+function onUploadFile(state, id) {
+    let newState = {};
+    Object.assign(newState, state);
+
+    newState.files.forEach((fileEntry) => {
+        if (fileEntry.id === id) {
+            fileEntry.uploadState = true;
+        }
+    });
+
+    newState.uploadGlobalState = true;
+
     return newState;
 }

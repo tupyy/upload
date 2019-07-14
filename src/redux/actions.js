@@ -1,4 +1,4 @@
-import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL} from "./actionTypes";
+import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL, UPLOAD_FILE} from "./actionTypes";
 
 let nextFileID = 0;
 
@@ -16,6 +16,11 @@ export const DeleteFile = id => ({
 
 export const CancelUpload = id => ({
     type: CANCEL_UPLOAD,
+    id: id
+});
+
+export const UploadFile = id => ({
+    type: UPLOAD_FILE,
     id: id
 });
 

@@ -4,9 +4,8 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import {CANCEL_UPLOAD, DELETE_FILE, UPLOAD_FILE} from "../../../redux/actionTypes";
 import {connect} from "react-redux";
-import {CancelUpload, DeleteFile} from "../../../redux/actions";
+import {CancelUpload, DeleteFile, UploadFile} from "../../../redux/actions";
 
 const React = require('react');
 
@@ -17,7 +16,7 @@ const React = require('react');
     }
 
     handleDeleteButtonClick(event) {
-        if (this.props.uploadState) {
+        if (this.props.uploadGlobalState) {
             this.props.cancelUpload(this.props.file.id);
         } else {
             this.props.deleteFile(this.props.file.id);
@@ -50,6 +49,7 @@ const React = require('react');
                                                 color="primary"
                                                 className={style.button}
                                                 disabled={this.props.uploadState}
+                                                onClick={this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
                                         </Button>
@@ -72,7 +72,8 @@ const React = require('react');
 function mapDispacthToProps(dispatch) {
     return {
         deleteFile: (id) => {dispatch(DeleteFile(id))},
-        cancelUpload: (id) => {dispatch(CancelUpload(id))}
+        cancelUpload: (id) => {dispatch(CancelUpload(id))},
+        uploadFile: (id) => {dispatch(UploadFile(id))}
     }
 }
 
