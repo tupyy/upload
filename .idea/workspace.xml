@@ -2,64 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6195a610-e63a-4a3f-ab09-ba27271841c1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front/src/UploadManager/FileUploader.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/app.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/config.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-grid.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-grid.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-grid.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-grid.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-reboot.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-reboot.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-reboot.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap-reboot.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/bootstrap.min.css.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/css/upload/fileui.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.bundle.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.bundle.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.bundle.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.bundle.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/bootstrap.min.js.map" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/plupload.full.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/upload/file-entry-skin.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/upload/file-entry-ui.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/upload/main.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/static/js/upload/mainForm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/back/templates/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/public/favicon.ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/public/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/public/manifest.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/App.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/App.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/App.test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/Clock.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/UploadManager/UploadManager.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/FileUIContainer/FileUI/FileUI.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/FileUIContainer/FileUI/FileUI.module.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/FileUIContainer/FileUIContainer.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/MainController/MainController.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/MainController/MainController.style.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/MainProgressBar/MainProgressBar.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/components/MainProgressBar/MainProgressBar.style.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/index.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/logo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/redux/actionTypes.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/redux/actions.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/redux/reducers/fileReducers.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/redux/reducers/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/redux/store.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/front/src/serviceWorker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/front/src/UploadManager/UploadManager.js" beforeDir="false" afterPath="$PROJECT_DIR$/front/src/UploadManager/UploadManager.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -72,11 +17,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/front/src/UploadManager/UploadManager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="63">
-              <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+            <state relative-caret-position="168">
+              <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/front/src/UploadManager/FileUploader.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="16" column="56" lean-forward="true" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -140,6 +97,8 @@
         <option value="$PROJECT_DIR$/webpack/webpack.dev.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/front/src/UploadManager/UploadManager.js" />
+        <option value="$PROJECT_DIR$/front/src/UploadManager/FileUploader.js" />
       </list>
     </option>
   </component>
@@ -165,7 +124,25 @@
             <path>
               <item name="react1" type="b2602c69:ProjectViewProjectNode" />
               <item name="react1" type="462c0819:PsiDirectoryNode" />
+              <item name="back" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react1" type="462c0819:PsiDirectoryNode" />
               <item name="front" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react1" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="react1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="react1" type="462c0819:PsiDirectoryNode" />
+              <item name="front" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="UploadManager" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -238,7 +215,7 @@
       <updated>1562679530777</updated>
       <workItem from="1562679531982" duration="1008000" />
       <workItem from="1562737232361" duration="39096000" />
-      <workItem from="1563191638407" duration="3643000" />
+      <workItem from="1563191638407" duration="6824000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <created>1562846889133</created>
@@ -300,13 +277,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69442000" />
+    <option name="totallyTimeSpent" value="72623000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1676" y="0" width="1688" height="1018" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17380808" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17380808" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -461,6 +438,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
           <caret line="3" column="6" selection-start-line="3" selection-start-column="6" selection-end-line="3" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/back/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-189" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/src/UploadManager/UploadManager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="8" column="19" selection-start-line="8" selection-start-column="19" selection-end-line="8" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/front/src/UploadManager/FileUploader.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="16" column="56" lean-forward="true" selection-start-line="16" selection-start-column="56" selection-end-line="16" selection-end-column="56" />
         </state>
       </provider>
     </entry>
