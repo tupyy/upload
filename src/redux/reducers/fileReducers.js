@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
                         name: action.name,
                         completed: 0,
                         uploadState: false
-                    }],
+                    }]
             };
         case UPLOAD_FILE:
             return onUploadFile(state, action.id);
@@ -96,7 +96,7 @@ function countUploadingFiles(state) {
 
     let countUploadingFiles = 0;
     state.files.forEach((fileEntry) => {
-        if (fileEntry.uploadState) {
+        if (fileEntry.uploadState === true) {
             countUploadingFiles++;
         }
     });

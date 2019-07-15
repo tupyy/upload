@@ -16,7 +16,7 @@ const React = require('react');
     }
 
     handleDeleteButtonClick(event) {
-        if (this.props.uploadGlobalState) {
+        if (this.props.uploadState) {
             this.props.cancelUpload(this.props.file.id);
         } else {
             this.props.deleteFile(this.props.file.id);
@@ -49,7 +49,7 @@ const React = require('react');
                                                 color="primary"
                                                 className={style.button}
                                                 disabled={this.props.uploadState}
-                                                onClick={this.props.uploadFile(this.props.file.id)}
+                                                onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
                                         </Button>
