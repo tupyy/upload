@@ -1,5 +1,4 @@
 import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL, UPLOAD_FILE} from "../actionTypes";
-
 let count = 0;
 
 const initialState = {
