@@ -3,13 +3,13 @@ import watch from 'redux-watch';
 import {UpdateUploadFileProgress} from "../redux/actions";
 
 let lock = false;
-function UploadManager() {
+function UploadService() {
 
     // Upload queue
     let uploadQueue = [];
 }
 
-UploadManager.prototype.subscribe = function() {
+UploadService.prototype.subscribe = function() {
     // store is THE redux store
     let w = watch(store.getState);
     store.subscribe(w((newState, oldState, objectPath) => {
@@ -19,7 +19,7 @@ UploadManager.prototype.subscribe = function() {
     }))
 };
 
-UploadManager.prototype.uploadFile = function() {
+UploadService.prototype.uploadFile = function() {
 
     if (lock === false) {
         for(let i=0; i<=100; i += 10) {
@@ -34,5 +34,5 @@ UploadManager.prototype.uploadFile = function() {
 
 
 
-export default UploadManager;
+export default UploadService;
 

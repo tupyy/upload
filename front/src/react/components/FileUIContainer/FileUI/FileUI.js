@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";
-import {CancelUpload, DeleteFile, UploadFile} from "../../../redux/actions";
+import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
 
 const React = require('react');
 

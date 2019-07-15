@@ -3,7 +3,7 @@ import styles from "./MainController.style";
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import {connect} from "react-redux";
-import {AddFile, CancelAll, ClearAll, UploadAll} from "../../redux/actions";
+import {AddFile, CancelAll, ClearAll, UploadAll} from "../../../redux/actions";
 
 class MainController extends React.Component {
     constructor(props) {
