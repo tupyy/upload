@@ -40,7 +40,7 @@ const React = require('react');
                                         {this.props.file.name}
                                     </Typography>
                                     <div className={style.progressBar}>
-                                        <LinearProgress variant="determinate" value={this.props.file.completed} />
+                                        <LinearProgress variant="determinate" value={this.props.completed} />
                                     </div>
                                 </Grid>
                                 <Grid item>

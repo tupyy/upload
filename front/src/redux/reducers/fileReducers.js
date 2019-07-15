@@ -1,4 +1,13 @@
-import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL, UPLOAD_FILE} from "../actionTypes";
+import {
+    ADD_FILE,
+    CANCEL_ALL,
+    CANCEL_UPLOAD,
+    CLEAR_ALL,
+    DELETE_FILE,
+    UPDATE_FILE_UPLOAD_PROGRESS,
+    UPLOAD_ALL,
+    UPLOAD_FILE
+} from "../actionTypes";
 let count = 0;
 
 const initialState = {
@@ -32,6 +41,8 @@ export default function (state = initialState, action) {
             return onUploadStateChange(state, true);
         case CANCEL_ALL:
             return onUploadStateChange(state, false);
+        case UPDATE_FILE_UPLOAD_PROGRESS:
+            return onUpdateUploadFileProgress(state, action.id, action.value);
         default:
             return state;
     }
@@ -109,6 +120,28 @@ function onUploadFile(state, id) {
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
             fileEntry.uploadState = true;
+        }
+    });
+
+    newState.uploadGlobalState = true;
+
+    return newState;
+}
+
+/**
+ * Update the complete variable in the file store
+ * @param state old state
+ * @param id id of the file
+ * @param value of the upload progress
+ * @returns new state
+ */
+function onUpdateUploadFileProgress(state, id, value) {
+    let newState = {};
+    Object.assign(newState, state);
+
+    newState.files.forEach((fileEntry) => {
+        if (fileEntry.id === id) {
+            fileEntry.completed = value;
         }
     });
 

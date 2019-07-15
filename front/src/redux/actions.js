@@ -1,4 +1,13 @@
-import {ADD_FILE, CANCEL_ALL, CANCEL_UPLOAD, CLEAR_ALL, DELETE_FILE, UPLOAD_ALL, UPLOAD_FILE} from "./actionTypes";
+import {
+    ADD_FILE,
+    CANCEL_ALL,
+    CANCEL_UPLOAD,
+    CLEAR_ALL,
+    DELETE_FILE,
+    UPDATE_FILE_UPLOAD_PROGRESS,
+    UPLOAD_ALL,
+    UPLOAD_FILE
+} from "./actionTypes";
 
 let nextFileID = 0;
 
@@ -34,4 +43,10 @@ export const CancelAll = () => ({
 
 export const ClearAll = () => ({
     type: CLEAR_ALL
+});
+
+export const UpdateUploadFileProgress = (id, value) => ({
+   type: UPDATE_FILE_UPLOAD_PROGRESS,
+   id: id,
+   value: value
 });

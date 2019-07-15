@@ -10,6 +10,7 @@ import UploadManager from "./UploadManager/UploadManager";
 const rootElement = document.getElementById("root");
 const uploadManager = new UploadManager();
 
+
 const render = () => ReactDOM.render(
     <Provider store={store}>
         <App />
@@ -17,7 +18,7 @@ const render = () => ReactDOM.render(
 );
 render();
 store.subscribe(render);
-
+uploadManager.subscribe();
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
