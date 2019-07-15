@@ -1,19 +1,19 @@
 function FileUploader() {
 
     // Url signed for S3
-    let signedUrl = "";
+    this.signedUrl = "";
 
     // the blob
-    let blob = undefined;
-    let filename = undefined;
-    let id = undefined;
-    let progress = 0;
+    this.blob = undefined;
+    this.filename = undefined;
+    this.id = undefined;
+    this.progress = 0;
 
     //XHR object. Set by the send function. Useful when cancelling the upload..
-    let xhr = undefined;
+    this.xhr = undefined;
 
     //trigger an update upload progress
-    let updateUploadProgress = function(value) {
+    this.updateUploadProgress = function(value) {
         this.dispatchEvent(new Event('updateProgress', {id: this.id,value: value}));
     }
 }
@@ -26,10 +26,9 @@ FileUploader.prototype.constructor = function(id, filename, blob) {
 
 /**
  * Start the upload
- * @param signedUrl the url requested by S3 to allow POST request
  * @return promise
  */
-FileUploader.prototype.send = function(signedUrl) {
+FileUploader.prototype.send = function() {
     const self = this;
     let promise = new Promise((resolve, reject) => {
         self.xhr = new XMLHttpRequest();
@@ -53,7 +52,7 @@ FileUploader.prototype.send = function(signedUrl) {
             }
         };
 
-        self.xhr.open('PUT', signedUrl, true);
+        self.xhr.open('PUT', this.signedUrl, true);
         self.xhr.setRequestHeader('Content-type', this.blob.type);
         self.xhr.overrideMimeType(this.blob.type);
         self.xhr.send(this.blob);
@@ -64,6 +63,7 @@ FileUploader.prototype.send = function(signedUrl) {
     return promise;
 };
 
+export default FileUploader;
 
 
 
