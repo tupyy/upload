@@ -1,8 +1,8 @@
-function FileUploader(id, filename, fileURL, fileType) {
+function FileUploader(id, filename,  fileType, file) {
 
-    this.fileURL = fileURL;
     this.filename = filename;
     this.fileType = fileType;
+    this.file = file;
     this.id = id;
     this.progress = 0;
 
@@ -11,12 +11,15 @@ function FileUploader(id, filename, fileURL, fileType) {
 
     //trigger an update upload progress
     this.updateUploadProgress = function(value) {
-        this.dispatchEvent(new Event('updateProgress', {id: this.id,value: value}));
+        // this.dispatchEvent(new Event('updateProgress', {id: this.id,value: value}));
     }
 }
 
 FileUploader.prototype.send = function(signAPI) {
     return this.sign(signAPI).then((signedURL) => {
+        return signedURL;
+    })
+    .then(signedURL => {
         return this.uploadFile(signedURL);
     });
 };
@@ -39,19 +42,19 @@ FileUploader.prototype.uploadFile = function(signedURL) {
         self.xhr.onreadystatechange = function () {
             if (self.xhr.readyState === 4) {
                 self.updateUploadProgress(100);
-                self.uploaded = true;
                 if (self.xhr.status === 200 || self.xhr.status === 204) {
                     resolve(self.id);
                 } else {
-                    reject(self.id);
+                    reject(self.id, self.xhr.statusText);
                 }
             }
         };
 
         self.xhr.open('PUT', signedURL, true);
-        self.xhr.setRequestHeader('Content-type', this.blob.type);
-        self.xhr.overrideMimeType(this.blob.type);
-        self.xhr.send(this.blob);
+        self.xhr.setRequestHeader('Content-type', this.fileType);
+        self.xhr.overrideMimeType(this.fileType);
+
+        self.xhr.send(this.file);
     });
     promise.abort = function() {
         this.xhr.abort();

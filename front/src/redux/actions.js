@@ -11,12 +11,13 @@ import {
 
 let nextFileID = 0;
 
-export const AddFile = (fileURL,name, fileType) => ({
+export const AddFile = (fileURL,name, fileType,file) => ({
     type: ADD_FILE,
     id: nextFileID++,
     fileURL,
     name,
-    fileType
+    fileType,
+    file
 });
 
 export const DeleteFile = id => ({

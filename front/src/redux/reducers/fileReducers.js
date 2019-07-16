@@ -27,6 +27,7 @@ export default function (state = initialState, action) {
                         fileURL: action.fileURL,
                         name: action.name,
                         fileType: action.fileType,
+                        file: action.file,
                         completed: 0,
                         uploadState: READY
                     }]

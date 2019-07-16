@@ -49,7 +49,7 @@ UploadService.prototype.onStateChange = function(newState) {
     newState.files.files.forEach(entry => {
         if (entry.uploadState === QUEUED) {
             if (this.hasFreeSlot() && !this.slots.hasOwnProperty(entry.id)) {
-                let fileUploader = new FileUploader(entry.id, entry.name, entry.fileURL, entry.fileType);
+                let fileUploader = new FileUploader(entry.id, entry.name, entry.fileType, entry.file);
                 this.slots[entry.id] = fileUploader;
 
                 /**

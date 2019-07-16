@@ -51,7 +51,7 @@ def sign_s3():
     )
 
     # Return the data to the client
-    return jsonify(signed_url)
+    return signed_url
 
 
 @app.route('/save/<photo_name>', methods=['POST'])
