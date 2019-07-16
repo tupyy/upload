@@ -1,9 +1,9 @@
+import json
 import os
 
 import boto3
 from botocore.config import Config
-from flask import Flask, render_template, jsonify, request
-
+from flask import Flask, render_template, jsonify, request, Response
 
 app = Flask(__name__)
 
@@ -38,20 +38,22 @@ def sign_s3():
     # Initialise the S3 client
     s3 = boto3.client('s3', config=Config(signature_version='s3v4'))
 
-    signed_urls = dict()
-    for k, v in data.items():
-        presigned_url = s3.generate_presigned_url(
-            ClientMethod='put_object',
-            Params={
-                'Bucket': S3_BUCKET,
-                'Key': v.get('filename'),
-                'ContentType': v.get('filetype')
-            }
-        )
-        signed_urls[k] = presigned_url
+    signed_url = s3.generate_presigned_url(
+        ClientMethod='put_object',
+        Params={
+            'Bucket': S3_BUCKET,
+            'Key': data.get('filename'),
+            'ContentType': data.get('filetype')
+        }
+    )
 
     # Return the data to the client
-    return jsonify(signed_urls)
+    return jsonify(signed_url)
+
+
+@app.route('/save/<photo_name>', methods=['POST'])
+def save_image(photo_name):
+    return Response(json.dumps({"name": photo_name}), status=200, mimetype="application/json")
 
 
 if __name__ == '__main__':
