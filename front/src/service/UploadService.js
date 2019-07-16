@@ -9,7 +9,7 @@ const signAPI = "http://localhost:5000/sign-s3";
 function UploadService() {
 
     // it limits the slot size
-    this.maxConcurrentUploads = 3;
+    this.maxConcurrentUploads = 1;
 
     /**
      * this holds the number of files which are currently uploading.
@@ -24,7 +24,7 @@ function UploadService() {
 
 UploadService.prototype.subscribe = function() {
     // store is THE redux store
-    let w = watch(store.getState);
+    let w = watch(store.getState,'files');
     store.subscribe(w((newState) => {
         this.onStateChange(newState);
     }));
@@ -35,7 +35,7 @@ UploadService.prototype.subscribe = function() {
  * @returns {boolean}
  */
 UploadService.prototype.hasFreeSlot = function() {
-    return Object.keys(this.slots).length <= this.maxConcurrentUploads;
+    return Object.keys(this.slots).length < this.maxConcurrentUploads;
 };
 
 /**
@@ -46,25 +46,25 @@ UploadService.prototype.hasFreeSlot = function() {
  */
 UploadService.prototype.onStateChange = function(newState) {
 
-    newState.files.files.forEach(entry => {
-        if (entry.uploadState === QUEUED) {
-            if (this.hasFreeSlot() && !this.slots.hasOwnProperty(entry.id)) {
+    newState.files.forEach(entry => {
+        if (entry.uploadState === QUEUED && !this.slots.hasOwnProperty(entry.id)) {
+            if (this.hasFreeSlot()) {
                 let fileUploader = new FileUploader(entry.id, entry.name, entry.fileType, entry.file);
                 this.slots[entry.id] = fileUploader;
-
                 /**
                  * call send method which return a promise. when the promise is either solved or rejected
                  * update the state of the file
                  */
                 this.updateUploadState(entry.id, UPLOADING);
                 let promise = fileUploader.send(signAPI);
+
                 promise.then(id => {
-                    this.updateUploadState(id, DONE);
                     delete this.slots[entry.id];
+                    this.updateUploadState(id, DONE);
                 }).catch( (id, reason) => {
                     console.log(reason);
-                    this.updateUploadState(id, ERROR);
                     delete this.slots[entry.id];
+                    this.updateUploadState(id, ERROR);
                 })
             }
         } else if (entry.uploadState === READY && this.slots.hasOwnProperty(entry.id)) {
@@ -72,6 +72,7 @@ UploadService.prototype.onStateChange = function(newState) {
             const fileUploader = this.slots[entry.id];
             fileUploader.abort();
             delete this.slots[entry.id];
+            this.updateUploadState(entry.id, READY);
         }
     })
 };
