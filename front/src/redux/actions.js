@@ -4,14 +4,15 @@ import {
     CANCEL_UPLOAD,
     CLEAR_ALL,
     DELETE_FILE,
-    UPDATE_FILE_UPLOAD_PROGRESS, UPDATE_FILE_UPLOAD_STATE,
+    UPDATE_FILE_UPLOAD_PROGRESS,
+    UPDATE_FILE_UPLOAD_STATE,
     UPLOAD_ALL,
     UPLOAD_FILE
 } from "./actionTypes";
 
 let nextFileID = 0;
 
-export const AddFile = (fileURL,name, fileType,file) => ({
+export const AddFile = (fileURL, name, fileType, file) => ({
     type: ADD_FILE,
     id: nextFileID++,
     fileURL,
@@ -47,14 +48,15 @@ export const ClearAll = () => ({
     type: CLEAR_ALL
 });
 
-export const UpdateUploadFileProgress = (id, value) => ({
-   type: UPDATE_FILE_UPLOAD_PROGRESS,
-   id: id,
-   value: value
+export const UpdateUploadFileProgress = (id, valuePercent, rawValue) => ({
+    type: UPDATE_FILE_UPLOAD_PROGRESS,
+    id: id,
+    value: valuePercent,
+    rawValue: rawValue
 });
 
 export const UpdateUploadState = (id, uploadState) => ({
-   type: UPDATE_FILE_UPLOAD_STATE,
-   id: id,
-   uploadState: uploadState
+    type: UPDATE_FILE_UPLOAD_STATE,
+    id: id,
+    uploadState: uploadState
 });

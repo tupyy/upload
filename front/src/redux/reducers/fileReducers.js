@@ -13,7 +13,11 @@ let count = 0;
 
 const initialState = {
     files: [],
-    uploadGlobalState: false
+    global: {
+        uploadGlobalState: false,
+        uploadedBytes: 0,
+        totalBytes: 0,
+    }
 };
 
 export default function (state = initialState, action) {
@@ -30,7 +34,12 @@ export default function (state = initialState, action) {
                         file: action.file,
                         completed: 0,
                         uploadState: READY
-                    }]
+                    }],
+                global: {
+                    totalBytes: state.global.totalBytes + action.file.length,
+                    uploadedBytes: state.global.uploadedBytes,
+                    uploadGlobalState: state.global.uploadGlobalState
+                }
             };
         case UPLOAD_FILE:
             return onUploadFile(state, action.id);
@@ -141,9 +150,10 @@ function onUploadFile(state, id) {
  * @param state old state
  * @param id id of the file
  * @param value of the upload progress
+ * @param rawValue number of bytes uploaded
  * @returns new state
  */
-function onUpdateUploadFileProgress(state, id, value) {
+function onUpdateUploadFileProgress(state, id, value, rawValue) {
     let newState = {};
     Object.assign(newState, state);
 
@@ -153,7 +163,8 @@ function onUpdateUploadFileProgress(state, id, value) {
         }
     });
 
-    newState.uploadGlobalState = true;
+    newState.global.uploadGlobalState = true;
+    newState.global.uploadedBytes += rawValue;
 
     return newState;
 }

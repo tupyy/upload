@@ -9,7 +9,7 @@ class App extends React.Component {
         return (
             <div>
                 <MainController/>
-                <MainProgressBar completed={0}/>
+                <MainProgressBar/>
                 <FileUIContainer/>
             </div>
         );

@@ -13,8 +13,8 @@ function FileUploader(id, filename,  fileType, file) {
     this.xhr = undefined;
 
     //trigger an update upload progress
-    this.updateUploadProgress = function(value) {
-        store.dispatch(UpdateUploadFileProgress(this.id, value));
+    this.updateUploadProgress = function(valuePercent, rawValue) {
+        store.dispatch(UpdateUploadFileProgress(this.id, valuePercent, rawValue));
     }
 }
 
@@ -44,12 +44,13 @@ FileUploader.prototype.uploadFile = function(signedURL) {
     let promise = new Promise((resolve, reject) => {
         self.xhr = new XMLHttpRequest();
 
-        self.xhr.upload.addEventListener("progress", function (e) {
+        self.xhr.onprogress = function (e) {
             if (e.lengthComputable) {
                 const progress = Math.round((e.loaded * 100) / e.total);
-                self.updateUploadProgress(progress);
+                console.log(e.loaded + ' ' + e.total);
+                self.updateUploadProgress(progress, e.loaded);
             }
-        }, false);
+        };
 
         self.xhr.onreadystatechange = function () {
             if (self.xhr.readyState === 4) {
