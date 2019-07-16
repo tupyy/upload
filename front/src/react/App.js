@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
-import FileUIContainer from './react/components/FileUIContainer/FileUIContainer';
-import MainController from "./react/components/MainController/MainController";
-import MainProgressBar from "./react/components/MainProgressBar/MainProgressBar";
+import FileUIContainer from './components/FileUIContainer/FileUIContainer';
+import MainController from "./components/MainController/MainController";
+import MainProgressBar from "./components/MainProgressBar/MainProgressBar";
 
 class App extends React.Component {
     render() {

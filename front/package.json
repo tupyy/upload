@@ -4,17 +4,23 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.2.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "esm": "^3.2.25",
+    "fs": "0.0.1-security",
+    "mocha": "^6.1.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.1.0",
     "react-scripts": "3.0.1",
     "redux": "^4.0.4",
-    "redux-watch": "^1.1.1"
+    "redux-watch": "^1.1.1",
+    "xmlhttprequest": "^1.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "mocha -r esm",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

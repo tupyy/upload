@@ -1,6 +1,7 @@
 import store from '../redux/store';
 import watch from 'redux-watch';
-import FileUploader from 'FileUploader';
+import FileUploader from './FileUploader';
+import {QUEUED, READY} from "../redux/uploadStateTypes";
 
 
 function UploadService() {
@@ -42,9 +43,9 @@ UploadService.prototype.hasFreeSlot = function() {
  */
 UploadService.prototype.onStateChange = function(newState) {
 
-    newState.files.forEach(entry => {
+    newState.files.files.forEach(entry => {
         if ( !this.uploadQueue.hasOwnProperty(entry.id) ) {
-            if (entry.uploadState === true) {
+            if (entry.uploadState === QUEUED) {
                 let fileUploader = new FileUploader(entry.id, entry.name, entry.file);
                 if (this.hasFreeSlot()) {
                     // TODO start it and add the promise to slots
@@ -55,8 +56,9 @@ UploadService.prototype.onStateChange = function(newState) {
                 // upload has only be queued..just remove it from upload queue
                 delete this.uploadQueue[entry.id];
             }
-        } else {
-            if (this.slots.hasOwnProperty(entry.id) && entry.uploadState === false) {
+        } else  {
+            //if the state is ready it means the upload has been cancelled so remove it from the queue
+            if (this.slots.hasOwnProperty(entry.id) && entry.uploadState === READY) {
                 //upload started. cancel it
                 let fileUploaderPromise = this.slots[entry.id];
                 fileUploaderPromise.abort();
@@ -65,34 +67,7 @@ UploadService.prototype.onStateChange = function(newState) {
     })
 };
 
-UploadService.prototype.signUrl = function(signingApi,file) {
-    let promise = new Promise( (resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", signingApi, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-        xhr.onreadystatechange = function() {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                resolve(xhr.responseText);
-            } else if (this.status === 404) {
-                reject(xhr.responseText);
-            }
-        };
-        xhr.send(JSON.stringify({
-            'filename': file.name,
-            'filetype': file.file.type
-        }));
-    });
-
-    promise.then((response) => {
-        return response;
-    });
-
-    promise.reject((response) => {
-        console.log("Error signing file: " + response);
-        return null;
-    });
-};
 
 export default UploadService;
 

@@ -6,6 +6,7 @@ import Button from "@material-ui/core/Button";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";
 import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
+import {READY} from "../../../../redux/uploadStateTypes";
 
 const React = require('react');
 
@@ -16,7 +17,7 @@ const React = require('react');
     }
 
     handleDeleteButtonClick(event) {
-        if (this.props.uploadState) {
+        if (this.props.uploadState !== READY) {
             this.props.cancelUpload(this.props.file.id);
         } else {
             this.props.deleteFile(this.props.file.id);
@@ -48,7 +49,7 @@ const React = require('react');
                                         <Button variant="contained"
                                                 color="primary"
                                                 className={style.button}
-                                                disabled={this.props.uploadState}
+                                                disabled={this.props.uploadState !== READY}
                                                 onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
@@ -56,7 +57,7 @@ const React = require('react');
                                         <Button variant="contained" color="secondary" className={style.button}
                                                 onClick={this.handleDeleteButtonClick}
                                         >
-                                            {this.props.uploadState ? "Stop" : "Delete"}
+                                            {this.props.uploadState !== READY ? "Stop" : "Delete"}
                                         </Button>
                                     </div>
                                 </Grid>

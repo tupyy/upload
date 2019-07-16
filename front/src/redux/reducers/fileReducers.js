@@ -8,6 +8,7 @@ import {
     UPLOAD_ALL,
     UPLOAD_FILE
 } from "../actionTypes";
+import {QUEUED, READY} from "../uploadStateTypes";
 let count = 0;
 
 const initialState = {
@@ -26,7 +27,7 @@ export default function (state = initialState, action) {
                         file: action.file,
                         name: action.name,
                         completed: 0,
-                        uploadState: false
+                        uploadState: READY
                     }]
             };
         case UPLOAD_FILE:
@@ -92,7 +93,7 @@ function onCancelUpload(state, id) {
 
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
-            fileEntry.uploadState = false;
+            fileEntry.uploadState = READY;
         }
     });
 
@@ -119,7 +120,7 @@ function onUploadFile(state, id) {
 
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
-            fileEntry.uploadState = true;
+            fileEntry.uploadState = QUEUED;
         }
     });
 

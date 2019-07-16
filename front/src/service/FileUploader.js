@@ -24,11 +24,16 @@ FileUploader.prototype.constructor = function(id, filename, blob) {
     this.filename = filename;
 };
 
+FileUploader.prototype.send = function(signAPI) {
+    return this.sign(signAPI).then((signedURL) => {
+        return this.uploadFile(signedURL);
+    });
+};
 /**
  * Start the upload
  * @return promise
  */
-FileUploader.prototype.send = function() {
+FileUploader.prototype.uploadFile = function(signedURL) {
     const self = this;
     let promise = new Promise((resolve, reject) => {
         self.xhr = new XMLHttpRequest();
@@ -52,7 +57,7 @@ FileUploader.prototype.send = function() {
             }
         };
 
-        self.xhr.open('PUT', this.signedUrl, true);
+        self.xhr.open('PUT', signedURL, true);
         self.xhr.setRequestHeader('Content-type', this.blob.type);
         self.xhr.overrideMimeType(this.blob.type);
         self.xhr.send(this.blob);
@@ -63,6 +68,27 @@ FileUploader.prototype.send = function() {
     return promise;
 };
 
+FileUploader.prototype.sign = function(signingApi,file) {
+    let promise = new Promise( (resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", signingApi, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                resolve(xhr.responseText);
+            } else if (this.status === 404) {
+                reject(xhr.responseText);
+            }
+        };
+        xhr.send(JSON.stringify({
+            'filename': file.name,
+            'filetype': file.file.type
+        }));
+    });
+
+    return promise;
+};
 export default FileUploader;
 
 
