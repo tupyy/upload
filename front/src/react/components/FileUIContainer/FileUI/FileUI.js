@@ -11,16 +11,6 @@ import {DONE, ERROR, READY} from "../../../../redux/uploadStateTypes";
 
 import React from "react";
 
-function UploadChip(props) {
-    if (props.uploadState === DONE) {
-        return <Chip color="primary" style={{backgroundColor: 'green'}} label="Done"/>;
-    } else if (props.uploadState === ERROR) {
-        return <Chip color="primary" style={{backgroundColor: 'red'}} label="Error"/>;
-    }
-
-    return <div/>;
-}
-
 class FileUI extends React.Component {
     constructor(props) {
         super(props);
@@ -100,6 +90,15 @@ function mapDispacthToProps(dispatch) {
             dispatch(UploadFile(id))
         }
     }
+}
+
+function UploadChip(props) {
+    if (props.uploadState === DONE) {
+        return <Chip color="primary" style={{backgroundColor: 'green'}} label="Done"/>;
+    } else if (props.uploadState === ERROR) {
+        return <Chip color="primary" style={{backgroundColor: 'red'}} label="Error"/>;
+    }
+    return <div/>;
 }
 
 export default connect(null, mapDispacthToProps)(FileUI)
