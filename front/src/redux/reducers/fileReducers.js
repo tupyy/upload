@@ -41,9 +41,9 @@ export default function (state = initialState, action) {
         case CLEAR_ALL:
             return initialState;
         case UPLOAD_ALL:
-            return onUploadStateChange(state, true);
+            return onUploadStateChange(state, QUEUED);
         case CANCEL_ALL:
-            return onUploadStateChange(state, false);
+            return onUploadStateChange(state, READY);
         case UPDATE_FILE_UPLOAD_PROGRESS:
             return onUpdateUploadFileProgress(state, action.id, action.value);
         case UPDATE_FILE_UPLOAD_STATE:
@@ -165,6 +165,9 @@ function onUpdateFileState(state, id, uploadState) {
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
             fileEntry.uploadState = uploadState;
+            if (uploadState === READY) {
+                fileEntry.completed = 0;
+            }
         }
     });
 
