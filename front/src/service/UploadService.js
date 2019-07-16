@@ -1,22 +1,25 @@
 import store from '../redux/store';
 import watch from 'redux-watch';
 import FileUploader from './FileUploader';
-import {QUEUED, READY} from "../redux/uploadStateTypes";
+import {DONE, ERROR, QUEUED, READY, UPLOADING} from "../redux/uploadStateTypes";
+import {UpdateUploadState} from "../redux/actions";
 
+const signAPI = "http://localhost:5000/sign-s3";
 
 function UploadService() {
 
     // it limits the slot size
     this.maxConcurrentUploads = 3;
 
-    // Upload queue
-    this.uploadQueue = {};
-
     /**
-     * this holds the file which are currently uploading.
+     * this holds the number of files which are currently uploading.
      * It has a maximum of concurrent uploads
      */
     this.slots = {};
+
+    this.updateUploadState = function(id, uploadState) {
+        store.dispatch(UpdateUploadState(id, uploadState));
+    }
 }
 
 UploadService.prototype.subscribe = function() {
@@ -32,7 +35,7 @@ UploadService.prototype.subscribe = function() {
  * @returns {boolean}
  */
 UploadService.prototype.hasFreeSlot = function() {
-    return this.slots.length <= this.maxConcurrentUploads;
+    return Object.keys(this.slots).length <= this.maxConcurrentUploads;
 };
 
 /**
@@ -44,25 +47,29 @@ UploadService.prototype.hasFreeSlot = function() {
 UploadService.prototype.onStateChange = function(newState) {
 
     newState.files.files.forEach(entry => {
-        if ( !this.uploadQueue.hasOwnProperty(entry.id) ) {
-            if (entry.uploadState === QUEUED) {
-                let fileUploader = new FileUploader(entry.id, entry.name, entry.file);
-                if (this.hasFreeSlot()) {
-                    // TODO start it and add the promise to slots
-                } else {
-                    this.uploadQueue[entry.id] = fileUploader;
-                }
-            } else {
-                // upload has only be queued..just remove it from upload queue
-                delete this.uploadQueue[entry.id];
+        if (entry.uploadState === QUEUED) {
+            if (this.hasFreeSlot() && !this.slots.hasOwnProperty(entry.id)) {
+                let fileUploader = new FileUploader(entry.id, entry.name, entry.fileURL, entry.fileType);
+                this.slots[entry.id] = fileUploader;
+
+                /**
+                 * call send method which return a promise. when the promise is either solved or rejected
+                 * update the state of the file
+                 */
+                this.updateUploadState(entry.id, UPLOADING);
+                let promise = fileUploader.send(signAPI);
+                promise.then(id => {
+                    this.updateUploadState(id, DONE);
+                }).catch( (id, reason) => {
+                    console.log(reason);
+                    this.updateUploadState(id, ERROR);
+                })
             }
-        } else  {
-            //if the state is ready it means the upload has been cancelled so remove it from the queue
-            if (this.slots.hasOwnProperty(entry.id) && entry.uploadState === READY) {
-                //upload started. cancel it
-                let fileUploaderPromise = this.slots[entry.id];
-                fileUploaderPromise.abort();
-            }
+        } else if (entry.uploadState === READY && this.slots.hasOwnProperty(entry.id)) {
+            // the upload for this file has been cancelled. Abort the promise
+            const fileUploader = this.slots[entry.id];
+            fileUploader.abort();
+            delete this.slots[entry.id];
         }
     })
 };

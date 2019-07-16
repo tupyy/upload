@@ -24,8 +24,9 @@ export default function (state = initialState, action) {
                 files: [...state.files,
                     {
                         id: count++,
-                        file: action.file,
+                        fileURL: action.fileURL,
                         name: action.name,
+                        fileType: action.fileType,
                         completed: 0,
                         uploadState: READY
                     }]
@@ -60,6 +61,8 @@ function onDeleteFile(state, id) {
 
     new_state.files.forEach((fileEntry, index) => {
         if (fileEntry.id === id) {
+            //release the URL
+            window.URL.revokeObjectURL(fileEntry.fileURL);
             new_state.files.splice(index, 1);
         }
     });

@@ -8,9 +8,9 @@ import {connect} from "react-redux";
 import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
 import {READY} from "../../../../redux/uploadStateTypes";
 
-const React = require('react');
+import React from "react";
 
- class FileUI extends React.Component {
+class FileUI extends React.Component {
     constructor(props) {
         super(props);
         this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
@@ -31,7 +31,7 @@ const React = require('react');
                     <Grid container spacing={2} className={style.mainGrid}>
                         <Grid item>
                             <div className={style.image}>
-                                <img className={style.img} alt="complex" src={this.props.file.file} />
+                                <img className={style.img} alt="complex" src={this.props.file.fileURL} />
                             </div>
                         </Grid>
                         <Grid item xs={12} sm container>

@@ -21,9 +21,9 @@ class MainController extends React.Component {
 
     handleChange(event) {
         let newFiles = Array.from(event.target.files);
-        newFiles.forEach( (element, index, array) => {
+        newFiles.forEach( (element) => {
             const file = element;
-            this.props.onAddFile(URL.createObjectURL(file), file.name);
+            this.props.onAddFile(URL.createObjectURL(file), file.name, file.type);
         });
         this.inputRef.current.value = "";
     }
@@ -70,7 +70,7 @@ class MainController extends React.Component {
  **/
 function mapDispatchToProps(dispatch) {
     return {
-        onAddFile: (file, name)=> { dispatch(AddFile(file,name))},
+        onAddFile: (fileURL, name, fileType)=> { dispatch(AddFile(fileURL,name, fileType))},
         onStartUpload: () => {dispatch(UploadAll())},
         onCancelAllUpload: () => dispatch(CancelAll()),
         onClearAll: () => dispatch(ClearAll())

@@ -1,12 +1,9 @@
-function FileUploader() {
+function FileUploader(id, filename, fileURL, fileType) {
 
-    // Url signed for S3
-    this.signedUrl = "";
-
-    // the blob
-    this.blob = undefined;
-    this.filename = undefined;
-    this.id = undefined;
+    this.fileURL = fileURL;
+    this.filename = filename;
+    this.fileType = fileType;
+    this.id = id;
     this.progress = 0;
 
     //XHR object. Set by the send function. Useful when cancelling the upload..
@@ -17,12 +14,6 @@ function FileUploader() {
         this.dispatchEvent(new Event('updateProgress', {id: this.id,value: value}));
     }
 }
-
-FileUploader.prototype.constructor = function(id, filename, blob) {
-    this.id = id;
-    this.blob = new Blob(blob);
-    this.filename = filename;
-};
 
 FileUploader.prototype.send = function(signAPI) {
     return this.sign(signAPI).then((signedURL) => {
@@ -68,11 +59,11 @@ FileUploader.prototype.uploadFile = function(signedURL) {
     return promise;
 };
 
-FileUploader.prototype.sign = function(signingApi,file) {
+FileUploader.prototype.sign = function(signingApi) {
     let promise = new Promise( (resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.open("POST", signingApi, true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.setRequestHeader("Content-Type", "application/json");
 
         xhr.onreadystatechange = function() {
             if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
@@ -82,8 +73,8 @@ FileUploader.prototype.sign = function(signingApi,file) {
             }
         };
         xhr.send(JSON.stringify({
-            'filename': file.name,
-            'filetype': file.file.type
+            'filename': this.filename,
+            'filetype': this.fileType
         }));
     });
 

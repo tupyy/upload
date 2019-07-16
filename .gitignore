@@ -28,3 +28,4 @@ yarn-error.log*
 #back
 /venv
 /back/config.env
+.idea/workspace.xml

@@ -4,9 +4,11 @@ import os
 import boto3
 from botocore.config import Config
 from flask import Flask, render_template, jsonify, request, Response
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-
+cors=CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 def load_env_variables():
     """
@@ -28,6 +30,7 @@ def hello_world():
 
 
 @app.route('/sign-s3', methods=['POST'])
+@cross_origin()
 def sign_s3():
     # Load necessary information into the application
     S3_BUCKET = "cosmin-photos-test"
