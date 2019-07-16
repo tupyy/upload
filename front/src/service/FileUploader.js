@@ -31,6 +31,10 @@ FileUploader.prototype.send = function(signAPI) {
         return this.uploadFile(signedURL);
     });
 };
+
+FileUploader.prototype.abort = function() {
+    this.xhr.abort();
+};
 /**
  * Start the upload
  * @return promise
@@ -64,9 +68,6 @@ FileUploader.prototype.uploadFile = function(signedURL) {
 
         self.xhr.send(this.file);
     });
-    promise.abort = function() {
-        this.xhr.abort();
-    };
     return promise;
 };
 
