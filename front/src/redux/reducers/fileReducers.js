@@ -127,6 +127,7 @@ function onUploadFile(state, id) {
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
             fileEntry.uploadState = QUEUED;
+            fileEntry.completed = 0;
         }
     });
 

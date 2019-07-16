@@ -13,9 +13,9 @@ import React from "react";
 
 function UploadChip(props) {
     if (props.uploadState === DONE) {
-        return <Chip color="primary" style={{backgroundColor:'green'}} label="Done"/>;
+        return <Chip color="primary" style={{backgroundColor: 'green'}} label="Done"/>;
     } else if (props.uploadState === ERROR) {
-        return <Chip color="primary" style={{backgroundColor:'red'}} label="Error"/>;
+        return <Chip color="primary" style={{backgroundColor: 'red'}} label="Error"/>;
     }
 
     return <div/>;
@@ -28,12 +28,16 @@ class FileUI extends React.Component {
     }
 
     handleDeleteButtonClick(event) {
-        if (this.props.uploadState !== READY) {
+        if (this.isUploading()) {
             this.props.cancelUpload(this.props.file.id);
         } else {
             this.props.deleteFile(this.props.file.id);
         }
     }
+
+    isUploading = function () {
+        return this.props.uploadState !== READY && this.props.uploadState !== DONE;
+    };
 
     render() {
         return (
@@ -42,7 +46,7 @@ class FileUI extends React.Component {
                     <Grid container spacing={2} className={style.mainGrid}>
                         <Grid item>
                             <div className={style.image}>
-                                <img className={style.img} alt="complex" src={this.props.file.fileURL} />
+                                <img className={style.img} alt="complex" src={this.props.file.fileURL}/>
                             </div>
                         </Grid>
                         <Grid item xs={12} sm container>
@@ -52,9 +56,9 @@ class FileUI extends React.Component {
                                         {this.props.file.name}
                                     </Typography>
                                     <div className={style.progressBar}>
-                                        <LinearProgress variant="determinate" value={this.props.completed} />
+                                        <LinearProgress variant="determinate" value={this.props.completed}/>
                                     </div>
-                                    <div class={style.chip}>
+                                    <div className={style.chip}>
                                         <UploadChip uploadState={this.props.uploadState}/>
                                     </div>
                                 </Grid>
@@ -63,7 +67,7 @@ class FileUI extends React.Component {
                                         <Button variant="contained"
                                                 color="primary"
                                                 className={style.button}
-                                                disabled={this.props.uploadState !== READY && this.props.uploadState !== DONE}
+                                                disabled={this.isUploading()}
                                                 onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
@@ -71,7 +75,7 @@ class FileUI extends React.Component {
                                         <Button variant="contained" color="secondary" className={style.button}
                                                 onClick={this.handleDeleteButtonClick}
                                         >
-                                            {this.props.uploadState !== READY && this.props.uploadState !== DONE ? "Stop" : "Delete"}
+                                            {this.isUploading() ? "Stop" : "Delete"}
                                         </Button>
                                     </div>
                                 </Grid>
@@ -86,9 +90,15 @@ class FileUI extends React.Component {
 
 function mapDispacthToProps(dispatch) {
     return {
-        deleteFile: (id) => {dispatch(DeleteFile(id))},
-        cancelUpload: (id) => {dispatch(CancelUpload(id))},
-        uploadFile: (id) => {dispatch(UploadFile(id))}
+        deleteFile: (id) => {
+            dispatch(DeleteFile(id))
+        },
+        cancelUpload: (id) => {
+            dispatch(CancelUpload(id))
+        },
+        uploadFile: (id) => {
+            dispatch(UploadFile(id))
+        }
     }
 }
 

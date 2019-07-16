@@ -60,9 +60,11 @@ UploadService.prototype.onStateChange = function(newState) {
                 let promise = fileUploader.send(signAPI);
                 promise.then(id => {
                     this.updateUploadState(id, DONE);
+                    delete this.slots[entry.id];
                 }).catch( (id, reason) => {
                     console.log(reason);
                     this.updateUploadState(id, ERROR);
+                    delete this.slots[entry.id];
                 })
             }
         } else if (entry.uploadState === READY && this.slots.hasOwnProperty(entry.id)) {
