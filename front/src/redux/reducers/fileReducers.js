@@ -4,7 +4,7 @@ import {
     CANCEL_UPLOAD,
     CLEAR_ALL,
     DELETE_FILE,
-    UPDATE_FILE_UPLOAD_PROGRESS,
+    UPDATE_FILE_UPLOAD_PROGRESS, UPDATE_FILE_UPLOAD_STATE,
     UPLOAD_ALL,
     UPLOAD_FILE
 } from "../actionTypes";
@@ -46,6 +46,8 @@ export default function (state = initialState, action) {
             return onUploadStateChange(state, false);
         case UPDATE_FILE_UPLOAD_PROGRESS:
             return onUpdateUploadFileProgress(state, action.id, action.value);
+        case UPDATE_FILE_UPLOAD_STATE:
+            return onUpdateFileState(state, action.id, action.uploadState);
         default:
             return state;
     }
@@ -147,6 +149,21 @@ function onUpdateUploadFileProgress(state, id, value) {
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
             fileEntry.completed = value;
+        }
+    });
+
+    newState.uploadGlobalState = true;
+
+    return newState;
+}
+
+function onUpdateFileState(state, id, uploadState) {
+    let newState = {};
+    Object.assign(newState, state);
+
+    newState.files.forEach((fileEntry) => {
+        if (fileEntry.id === id) {
+            fileEntry.uploadState = uploadState;
         }
     });
 

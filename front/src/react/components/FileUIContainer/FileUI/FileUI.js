@@ -3,12 +3,23 @@ import style from './FileUI.module.css';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
+import Chip from '@material-ui/core/Chip';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";
 import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
-import {READY} from "../../../../redux/uploadStateTypes";
+import {DONE, ERROR, READY} from "../../../../redux/uploadStateTypes";
 
 import React from "react";
+
+function UploadChip(props) {
+    if (props.uploadState === DONE) {
+        return <Chip color="primary" style={{backgroundColor:'green'}} label="Done"/>;
+    } else if (props.uploadState === ERROR) {
+        return <Chip color="primary" style={{backgroundColor:'red'}} label="Error"/>;
+    }
+
+    return <div/>;
+}
 
 class FileUI extends React.Component {
     constructor(props) {
@@ -43,13 +54,16 @@ class FileUI extends React.Component {
                                     <div className={style.progressBar}>
                                         <LinearProgress variant="determinate" value={this.props.completed} />
                                     </div>
+                                    <div class={style.chip}>
+                                        <UploadChip uploadState={this.props.uploadState}/>
+                                    </div>
                                 </Grid>
                                 <Grid item>
                                     <div className={style.buttonContainer}>
                                         <Button variant="contained"
                                                 color="primary"
                                                 className={style.button}
-                                                disabled={this.props.uploadState !== READY}
+                                                disabled={this.props.uploadState !== READY && this.props.uploadState !== DONE}
                                                 onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
@@ -57,7 +71,7 @@ class FileUI extends React.Component {
                                         <Button variant="contained" color="secondary" className={style.button}
                                                 onClick={this.handleDeleteButtonClick}
                                         >
-                                            {this.props.uploadState !== READY ? "Stop" : "Delete"}
+                                            {this.props.uploadState !== READY && this.props.uploadState !== DONE ? "Stop" : "Delete"}
                                         </Button>
                                     </div>
                                 </Grid>

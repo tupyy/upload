@@ -1,3 +1,6 @@
+import store from '../redux/store';
+import {UpdateUploadFileProgress} from "../redux/actions";
+
 function FileUploader(id, filename,  fileType, file) {
 
     this.filename = filename;
@@ -11,10 +14,15 @@ function FileUploader(id, filename,  fileType, file) {
 
     //trigger an update upload progress
     this.updateUploadProgress = function(value) {
-        // this.dispatchEvent(new Event('updateProgress', {id: this.id,value: value}));
+        store.dispatch(UpdateUploadFileProgress(this.id, value));
     }
 }
 
+/**
+ * Chain two promises. The first one sign the s3 url and the second upload the file
+ * @param signAPI
+ * @return {Promise<promise | never>}
+ */
 FileUploader.prototype.send = function(signAPI) {
     return this.sign(signAPI).then((signedURL) => {
         return signedURL;
