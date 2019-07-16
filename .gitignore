@@ -26,5 +26,5 @@ yarn-debug.log*
 yarn-error.log*
 
 #back
-/back/venv
+/venv
 /back/config.env
