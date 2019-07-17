@@ -128,21 +128,9 @@ function onCancelUpload(state, id) {
         }
     });
 
-    if (countUploadingFiles(newState) === 0) {
-        newState.global.uploadGlobalState = false;
-    }
+    newState.global.uploadGlobalState = getUploadGlobalState(newState);
+
     return newState;
-}
-
-function countUploadingFiles(state) {
-
-    let countUploadingFiles = 0;
-    state.files.forEach((fileEntry) => {
-        if (fileEntry.uploadState === UPLOADING || fileEntry.uploadState === QUEUED) {
-            countUploadingFiles++;
-        }
-    });
-    return countUploadingFiles;
 }
 
 function onUploadFile(state, id) {
@@ -156,7 +144,7 @@ function onUploadFile(state, id) {
         }
     });
 
-    newState.global.uploadGlobalState = true;
+    newState.global.uploadGlobalState = getUploadGlobalState(state);
 
     return newState;
 }
@@ -197,5 +185,23 @@ function onUpdateFileState(state, id, uploadState) {
         }
     });
 
+    newState.global.uploadGlobalState = getUploadGlobalState(newState);
     return newState;
+}
+
+/**
+ * Return the global upload state. If there is at least one file which is uploading return true
+ * else return false
+ * @param state
+ * @return {boolean}
+ */
+function getUploadGlobalState(state) {
+
+    for(let i=0; i<state.files.length; i++) {
+        const fileEntry = state.files[i];
+        if (fileEntry.uploadState === UPLOADING || fileEntry.uploadState === QUEUED) {
+            return true;
+        }
+    }
+    return false;
 }

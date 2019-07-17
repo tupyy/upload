@@ -7,10 +7,6 @@ import {connect} from "react-redux";
 class MainProgressBar extends React.Component {
 
     computeProgress = function () {
-        if (this.props.uploadGlobalState === false) {
-            return 0;
-        }
-
         if (this.props.uploadedBytes === 0 || this.props.totalBytes === 0) {
             return 0;
         }

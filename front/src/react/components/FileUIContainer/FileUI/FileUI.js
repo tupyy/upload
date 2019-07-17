@@ -18,17 +18,19 @@ class FileUI extends React.Component {
     }
 
     handleDeleteButtonClick(event) {
-        if (this.isUploading()) {
+        if (this.canUpload()) {
             this.props.cancelUpload(this.props.file.id);
         } else {
             this.props.deleteFile(this.props.file.id);
         }
     }
 
-    isUploading = function () {
-        return this.props.uploadState !== READY &&
-               this.props.uploadState !== DONE &&
-               this.props.uploadState !== CANCELLED;
+    isDisabled = function () {
+      return this.props.uploadState === DONE;
+    };
+
+    canUpload = function () {
+        return this.props.uploadState !== READY;
     };
 
     render() {
@@ -59,15 +61,17 @@ class FileUI extends React.Component {
                                         <Button variant="contained"
                                                 color="primary"
                                                 className={style.button}
-                                                disabled={this.isUploading()}
+                                                disabled={this.isDisabled()}
                                                 onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
                                         </Button>
-                                        <Button variant="contained" color="secondary" className={style.button}
+                                        <Button variant="contained" color="secondary"
+                                                className={style.button}
                                                 onClick={this.handleDeleteButtonClick}
+                                                disabled={this.isDisabled()}
                                         >
-                                            {this.isUploading() ? "Stop" : "Delete"}
+                                            {this.canUpload() ? "Stop" : "Delete"}
                                         </Button>
                                     </div>
                                 </Grid>
