@@ -1,0 +1,30 @@
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.logContainer {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.logReasonEntry {
+    font-size: 15px;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.logReasonEntry:before {
+    content: "Reason: ";
+    color: black;
+}
+
+.logStatusEntry {
+    font-size: 15px;
+    color: red;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+.logStatusEntry:before {
+    content: "State: ";
+    color: black;
+}
