@@ -5,6 +5,7 @@ import {CANCELLED, DONE, ERROR, QUEUED, UPLOADING} from "../redux/uploadStateTyp
 import {UpdateUploadState} from "../redux/actions";
 
 const signAPI = "http://localhost:5000/sign-s3";
+const saveAPi = "http://localhost:5000/bad_route";
 
 function UploadService() {
 
@@ -55,7 +56,7 @@ UploadService.prototype.onStateChange = function(newState) {
                  * update the state of the file
                  */
                 this.updateUploadState(entry.id, UPLOADING);
-                let promise = fileUploader.send(signAPI);
+                let promise = fileUploader.send(signAPI, saveAPi);
 
                 promise.then(id => {
                     delete this.slots[id];

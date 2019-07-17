@@ -30,15 +30,47 @@ function FileUploader(id, filename, fileType, file) {
      */
     this.updateUploadProgress = function (valuePercent, chunkSize, rawValue) {
         store.dispatch(UpdateUploadFileProgress(this.id, valuePercent, chunkSize, rawValue));
+    };
+
+    /**
+     * Create XHR object for make POST requests
+     * @param id file id
+     * @param url url request
+     * @param resolve resolve promise callback
+     * @param reject reject promise callback
+     * @return {XMLHttpRequest}
+     */
+    this.createXHRObject = function(id, url, resolve, reject) {
+        let xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                resolve(xhr.responseText);
+            } else if (xhr.status === 404) {
+                reject({
+                    'id': id,
+                    'reason': xhr.statusText,
+                    'status': xhr.status
+                });
+            }
+        };
+        return xhr;
     }
 }
 
 /**
- * Chain two promises. The first one sign the s3 url and the second upload the file.
+ * Chain three promises.
+ * - sign the url for s3 upload
+ * - upload to s3
+ * - call the server to save the file entry to db
+ *     
  * @param signAPI
+ * @param saveAPI
  * @return {Promise<promise | never>}
  */
-FileUploader.prototype.send = function (signAPI) {
+FileUploader.prototype.send = function (signAPI, saveAPI) {
     this.promise = new Promise( (resolve, reject) => {
         this.sign(signAPI).then((signedURL) => {
             return signedURL;
@@ -49,6 +81,12 @@ FileUploader.prototype.send = function (signAPI) {
             console.log("reject with reason");
             reject({"id": this.id,
                     "reason": "aborted"}); // catch the abort or error
+        })
+        .then( () => {
+            return this.save(saveAPI);
+        }).catch( reason => {
+            console.log(reason);
+            reject(reason); // catch the abort or error
         })
         .then( () => {
             resolve(this.id);
@@ -86,7 +124,8 @@ FileUploader.prototype.uploadFile = function (signedURL) {
                 } else {
                     reject({
                         'id': self.id,
-                        'reason': self.xhr.statusText
+                        'reason': self.xhr.statusText,
+                        'status': self.xhr.status
                     });
                 }
             }
@@ -101,25 +140,24 @@ FileUploader.prototype.uploadFile = function (signedURL) {
 };
 
 FileUploader.prototype.sign = function (signingApi) {
-    let promise = new Promise((resolve, reject) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open("POST", signingApi, true);
-        xhr.setRequestHeader("Content-Type", "application/json");
-
-        xhr.onreadystatechange = function () {
-            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
-                resolve(xhr.responseText);
-            } else if (this.status === 404) {
-                reject(xhr.responseText);
-            }
-        };
-        xhr.send(JSON.stringify({
-            'filename': this.filename,
-            'filetype': this.fileType
+    let self = this;
+    return new Promise((resolve, reject) => {
+        self.xhr = self.createXHRObject(self.id, signingApi, resolve, reject);
+        self.xhr.send(JSON.stringify({
+            'filename': self.filename,
+            'filetype': self.fileType
         }));
     });
+};
 
-    return promise;
+FileUploader.prototype.save = function(saveApi) {
+    let self = this;
+    return new Promise( (resolve, reject) => {
+        self.xhr = self.createXHRObject(self.id, saveApi, resolve, reject);
+        self.xhr.send(JSON.stringify({
+            'filename': self.filename
+        }));
+    });
 };
 export default FileUploader;
 
