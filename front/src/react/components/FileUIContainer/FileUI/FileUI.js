@@ -7,7 +7,7 @@ import StateChip from '../StateChip/StateChip';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";
 import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
-import {CANCELLED, DONE, ERROR, READY} from "../../../../redux/uploadStateTypes";
+import {DONE, UPLOADING} from "../../../../redux/uploadStateTypes";
 
 import React from "react";
 
@@ -18,15 +18,15 @@ class FileUI extends React.Component {
     }
 
     handleDeleteButtonClick(event) {
-        if (this.canUpload()) {
+        if (this.isUploading()) {
             this.props.cancelUpload(this.props.file.id);
         } else {
             this.props.deleteFile(this.props.file.id);
         }
     }
 
-    canUpload = function () {
-        return this.props.uploadState !== READY;
+    isUploading = function () {
+        return this.props.uploadState === UPLOADING;
     };
 
     render() {
@@ -42,34 +42,32 @@ class FileUI extends React.Component {
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
                                 <Grid item xs>
-                                    <Typography variant="body2" gutterBottom className={style.filename}>
-                                        {this.props.file.name}
+                                    <Typography variant="body2" gutterBottom className={ style.filename }>
+                                        { this.props.file.name }
                                     </Typography>
-                                    <div className={style.progressBar}>
-                                        <LinearProgress variant="determinate" value={this.props.completed}/>
+                                    <div className={ style.progressBar }>
+                                        <LinearProgress variant="determinate" value={ this.props.completed }/>
                                     </div>
-                                    <div className={style.chip}>
-                                        <StateChip uploadState={this.props.uploadState} stateLog={this.props.file.stateLog}/>
+                                    <div className={ style.chip }>
+                                        <StateChip uploadState={ this.props.uploadState } stateLog={ this.props.file.stateLog }/>
                                     </div>
                                 </Grid>
                                 <Grid item>
-                                    <div className={style.buttonContainer}>
+                                    <div className={ style.buttonContainer }>
                                         <Button variant="contained"
                                                 color="primary"
-                                                className={style.button}
-                                                disabled={this.props.uploadState === DONE}
+                                                className={ style.button }
+                                                disabled={ this.props.uploadState === DONE ||
+                                                           this.props.uploadState === UPLOADING }
                                                 onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
                                         </Button>
                                         <Button variant="contained" color="secondary"
                                                 className={style.button}
-                                                onClick={this.handleDeleteButtonClick}
-                                                disabled={this.props.uploadState === DONE ||
-                                                          this.props.uploadState === CANCELLED
-                                                }
+                                                onClick={ this.handleDeleteButtonClick }
                                         >
-                                            {this.canUpload() ? "Stop" : "Delete"}
+                                            { this.props.uploadState === UPLOADING ? "Stop" : "Delete" }
                                         </Button>
                                     </div>
                                 </Grid>
