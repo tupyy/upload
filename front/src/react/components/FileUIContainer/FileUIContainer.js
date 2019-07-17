@@ -14,6 +14,7 @@ class FileUIContainer extends React.Component {
                                         file={file}
                                         uploadState={file.uploadState}
                                         completed={file.completed}
+                                        showErrorLog={true}
                                 />))
                             : "Add some files"
                     }

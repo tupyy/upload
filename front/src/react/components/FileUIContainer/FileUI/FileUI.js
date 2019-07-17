@@ -3,7 +3,7 @@ import style from './FileUI.module.css';
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-import Chip from '@material-ui/core/Chip';
+import StateChip from '../StateChip/StateChip';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";
 import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
@@ -49,7 +49,7 @@ class FileUI extends React.Component {
                                         <LinearProgress variant="determinate" value={this.props.completed}/>
                                     </div>
                                     <div className={style.chip}>
-                                        <UploadChip uploadState={this.props.uploadState}/>
+                                        <StateChip uploadState={this.props.uploadState} stateLog={this.props.file.stateLog}/>
                                     </div>
                                 </Grid>
                                 <Grid item>
@@ -94,17 +94,6 @@ function mapDispacthToProps(dispatch) {
             dispatch(UploadFile(id))
         }
     }
-}
-
-function UploadChip(props) {
-    if (props.uploadState === DONE) {
-        return <Chip color="primary" style={{backgroundColor: 'green'}} label="Done"/>;
-    } else if (props.uploadState === ERROR) {
-        return <Chip color="primary" style={{backgroundColor: 'red'}} label="Error"/>;
-    } else if (props.uploadState === CANCELLED) {
-        return <Chip color="primary" style={{backgroundColor: 'orange'}} label="Cancelled"/>
-    }
-    return <div/>;
 }
 
 export default connect(null, mapDispacthToProps)(FileUI)
