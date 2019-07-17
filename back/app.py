@@ -54,10 +54,15 @@ def sign_s3():
     return signed_url
 
 
-@app.route('/save/<photo_name>', methods=['POST'])
-def save_image(photo_name):
-    return Response(json.dumps({"name": photo_name}), status=200, mimetype="application/json")
+@app.route('/save', methods=['POST'])
+@cross_origin()
+def save():
+    return Response(json.dumps({"name": "ok"}), status=200, mimetype="application/json")
 
+@app.route('/bad_route', methods=['POST'])
+@cross_origin()
+def bad_route():
+    return Response(json.dumps({"reason":"wtf"}), status=404, mimetype="application/json")
 
 if __name__ == '__main__':
     load_env_variables()
