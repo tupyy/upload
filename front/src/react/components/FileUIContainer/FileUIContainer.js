@@ -1,6 +1,7 @@
 import FileUI from './FileUI/FileUI';
 import React from 'react';
 import {connect} from "react-redux";
+import style from './FileUIContainer.module.css';
 
 class FileUIContainer extends React.Component {
 
@@ -16,7 +17,9 @@ class FileUIContainer extends React.Component {
                                         completed={file.completed}
                                         showErrorLog={true}
                                 />))
-                            : "Add some files"
+                            : <div className={style.noFiles}>
+                            <p>Add some images...</p>
+                            </div>
                     }
                 </div>
             </div>
