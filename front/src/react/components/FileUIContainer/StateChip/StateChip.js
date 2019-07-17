@@ -19,11 +19,11 @@ class StateChip extends React.Component {
 
     render() {
         if (this.props.uploadState === DONE) {
-            return <Chip color="primary" style={{backgroundColor: 'green'}} label="Done"/>;
+            return <Chip color="primary" style={{backgroundColor: 'green', fontWeight:'bold'}} label="Done"/>;
         } else if (this.props.uploadState === ERROR) {
             return (
                 <div>
-                    <Chip color="primary" style={{backgroundColor: 'red'}} label="Error" onClick={this.handleClick}/>
+                    <Chip color="primary" style={{backgroundColor: 'red', fontWeight:'bold'}} label="Error" onClick={this.handleClick}/>
                     { this.state.showStateLog &&
                         <ul className={style.logContainer}>
                             <li className={style.logReasonEntry}>{ this.props.stateLog.reason }</li>
@@ -33,7 +33,7 @@ class StateChip extends React.Component {
                 </div>
                );
         } else if (this.props.uploadState === CANCELLED) {
-            return <Chip color="primary" style={{backgroundColor: 'orange'}} label="Cancelled"/>
+            return <Chip color="primary" style={{backgroundColor: 'orange', fontWeight:'bold'}} label="Cancelled"/>
         }
         return <div/>;
     }

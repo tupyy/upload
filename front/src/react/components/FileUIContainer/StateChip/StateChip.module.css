@@ -20,6 +20,7 @@ ul {
 
 .logStatusEntry {
     font-size: 15px;
+    font-weight: bold;
     color: red;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
 }
@@ -27,4 +28,5 @@ ul {
 .logStatusEntry:before {
     content: "State: ";
     color: black;
+    font-weight: normal;
 }
