@@ -61,10 +61,11 @@ UploadService.prototype.onStateChange = function(newState) {
                 promise.then(id => {
                     delete this.slots[id];
                     this.updateUploadState(id, DONE);
-                }).catch( (id, reason) => {
-                    let newState = this.slots[id].hasBeenAborted === true ? CANCELLED : ERROR;
-                    delete this.slots[id];
-                    this.updateUploadState(id, newState);
+                }).catch( (payload) => {
+                    console.log(payload);
+                    let newState = this.slots[payload.id].hasBeenAborted === true ? CANCELLED : ERROR;
+                    delete this.slots[payload.id];
+                    this.updateUploadState(payload.id, newState);
                 })
             }
         } else if (entry.uploadState === CANCELLED && this.slots.hasOwnProperty(entry.id)) {

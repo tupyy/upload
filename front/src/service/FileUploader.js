@@ -41,7 +41,9 @@ FileUploader.prototype.send = function (signAPI) {
         .then(signedURL => {
             return this.uploadFile(signedURL);
         }).catch(() => {
-            reject(this.id); // catch the abort or error
+            console.log("reject with reason");
+            reject({"id": this.id,
+                    "reason": "aborted"}); // catch the abort or error
         });
     });
     return this.promise;
@@ -74,7 +76,10 @@ FileUploader.prototype.uploadFile = function (signedURL) {
                 if (self.xhr.status === 200 || self.xhr.status === 204) {
                     resolve(self.id);
                 } else {
-                    reject(self.id, self.xhr.statusText);
+                    reject({
+                        'id': self.id,
+                        'reason': self.xhr.statusText
+                    });
                 }
             }
         };
