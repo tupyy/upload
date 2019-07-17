@@ -33,6 +33,7 @@ export default function (state = initialState, action) {
                         fileType: action.fileType,
                         file: action.file,
                         completed: 0,
+                        bytesUploaded : 0,
                         uploadState: READY
                     }],
                 global: {
@@ -54,7 +55,7 @@ export default function (state = initialState, action) {
         case CANCEL_ALL:
             return onCancelAll(state);
         case UPDATE_FILE_UPLOAD_PROGRESS:
-            return onUpdateUploadFileProgress(state, action.id, action.value, action.rawValue);
+            return onUpdateUploadFileProgress(state, action.id, action.value, action.chunkSize, action.rawValue);
         case UPDATE_FILE_UPLOAD_STATE:
             return onUpdateFileState(state, action.id, action.uploadState);
         default:
@@ -108,6 +109,7 @@ function onCancelAll(state) {
         }
     });
 
+    newState.global.uploadedBytes -= countBytesByState(newState, CANCELLED);
     newState.global.uploadGlobalState = false;
     return newState;
 }
@@ -125,11 +127,13 @@ function onCancelUpload(state, id) {
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
             fileEntry.uploadState = CANCELLED;
+
+            // subtract uploaded bytes for this file from the global progress
+            newState.global.uploadedBytes -= fileEntry.bytesUploaded;
         }
     });
 
     newState.global.uploadGlobalState = getUploadGlobalState(newState);
-
     return newState;
 }
 
@@ -141,6 +145,7 @@ function onUploadFile(state, id) {
         if (fileEntry.id === id) {
             fileEntry.uploadState = QUEUED;
             fileEntry.completed = 0;
+            fileEntry.bytesUploaded = 0;
         }
     });
 
@@ -154,20 +159,22 @@ function onUploadFile(state, id) {
  * @param state old state
  * @param id id of the file
  * @param value of the upload progress
+ * @param chunkSize number of bytes uploaded from the last call for file {@param id}
  * @param rawValue number of bytes uploaded
  * @returns new state
  */
-function onUpdateUploadFileProgress(state, id, value, rawValue) {
+function onUpdateUploadFileProgress(state, id, value, chunkSize, rawValue) {
     let newState = {};
     Object.assign(newState, state);
 
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
             fileEntry.completed = value;
+            fileEntry.bytesUploaded = rawValue;
         }
     });
 
-    newState.global.uploadedBytes += rawValue;
+    newState.global.uploadedBytes += chunkSize;
 
     return newState;
 }
@@ -181,6 +188,7 @@ function onUpdateFileState(state, id, uploadState) {
             fileEntry.uploadState = uploadState;
             if (uploadState === READY) {
                 fileEntry.completed = 0;
+                fileEntry.bytesUploaded = 0;
             }
         }
     });
@@ -204,4 +212,21 @@ function getUploadGlobalState(state) {
         }
     }
     return false;
+}
+
+/**
+ * Count the number of bytes of all files with state {@param uploadState}
+ * @param state
+ * @param uploadState
+ */
+function countBytesByState(state, uploadState) {
+
+    let totalBytes = 0;
+    state.files.forEach(fileEntry => {
+        if (fileEntry.uploadState === uploadState) {
+            totalBytes += fileEntry.bytesUploaded;
+        }
+    });
+
+    return totalBytes;
 }

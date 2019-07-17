@@ -48,10 +48,11 @@ export const ClearAll = () => ({
     type: CLEAR_ALL
 });
 
-export const UpdateUploadFileProgress = (id, valuePercent, rawValue) => ({
+export const UpdateUploadFileProgress = (id, valuePercent, chunkSize, rawValue) => ({
     type: UPDATE_FILE_UPLOAD_PROGRESS,
     id: id,
     value: valuePercent,
+    chunkSize: chunkSize,
     rawValue: rawValue
 });
 

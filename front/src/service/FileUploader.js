@@ -22,9 +22,14 @@ function FileUploader(id, filename, fileType, file) {
     //XHR object. Set by the send function. Useful when cancelling the upload..
     this.xhr = undefined;
 
-    //trigger an update upload progress
-    this.updateUploadProgress = function (valuePercent, rawValue) {
-        store.dispatch(UpdateUploadFileProgress(this.id, valuePercent, rawValue));
+    /**
+     * trigger update file progress
+     * @param valuePercent progress value in %
+     * @param chunkSize number of bytes uploaded since the last event
+     * @param rawValue total uploaded bytes
+     */
+    this.updateUploadProgress = function (valuePercent, chunkSize, rawValue) {
+        store.dispatch(UpdateUploadFileProgress(this.id, valuePercent, chunkSize, rawValue));
     }
 }
 
@@ -68,7 +73,7 @@ FileUploader.prototype.uploadFile = function (signedURL) {
         self.xhr.upload.addEventListener("progress", function (e) {
             if (e.lengthComputable) {
                 const progress = Math.round((e.loaded * 100) / e.total);
-                self.updateUploadProgress(progress, e.loaded - self.lastUploadedBytesValue);
+                self.updateUploadProgress(progress, e.loaded - self.lastUploadedBytesValue, e.loaded);
                 self.lastUploadedBytesValue = e.loaded;
             }
         });
