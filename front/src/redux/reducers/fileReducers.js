@@ -57,7 +57,7 @@ export default function (state = initialState, action) {
         case UPDATE_FILE_UPLOAD_PROGRESS:
             return onUpdateUploadFileProgress(state, action.id, action.value, action.chunkSize, action.rawValue);
         case UPDATE_FILE_UPLOAD_STATE:
-            return onUpdateFileState(state, action.id, action.uploadState);
+            return onUpdateFileState(state, action.id, action.uploadState, action.uploadStatePayload);
         default:
             return state;
     }
@@ -179,16 +179,21 @@ function onUpdateUploadFileProgress(state, id, value, chunkSize, rawValue) {
     return newState;
 }
 
-function onUpdateFileState(state, id, uploadState) {
+function onUpdateFileState(state, id, uploadState, uploadStatePayload) {
     let newState = {};
     Object.assign(newState, state);
 
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
-            fileEntry.uploadState = uploadState;
             if (uploadState === READY) {
                 fileEntry.completed = 0;
                 fileEntry.bytesUploaded = 0;
+                fileEntry.stateLog = {}
+            } else {
+                fileEntry.uploadState = uploadState;
+                if (uploadStatePayload !== undefined) {
+                    fileEntry.stateLog = uploadStatePayload;
+                }
             }
         }
     });

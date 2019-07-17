@@ -56,8 +56,9 @@ export const UpdateUploadFileProgress = (id, valuePercent, chunkSize, rawValue) 
     rawValue: rawValue
 });
 
-export const UpdateUploadState = (id, uploadState) => ({
+export const UpdateUploadState = (id, uploadState, uploadStatePayload) => ({
     type: UPDATE_FILE_UPLOAD_STATE,
     id: id,
-    uploadState: uploadState
+    uploadState: uploadState,
+    uploadStatePayload: uploadStatePayload
 });

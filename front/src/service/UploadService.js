@@ -18,8 +18,14 @@ function UploadService() {
      */
     this.slots = {};
 
-    this.updateUploadState = function(id, uploadState) {
-        store.dispatch(UpdateUploadState(id, uploadState));
+    /**
+     * Update the state of the file
+     * @param id
+     * @param uploadState current update state
+     * @param uploadStatePayload optional object to save status of the current state
+     */
+    this.updateUploadState = function(id, uploadState, uploadStatePayload) {
+        store.dispatch(UpdateUploadState(id, uploadState, uploadStatePayload));
     }
 }
 
@@ -65,7 +71,7 @@ UploadService.prototype.onStateChange = function(newState) {
                     console.log(payload);
                     let newState = this.slots[payload.id].hasBeenAborted === true ? CANCELLED : ERROR;
                     delete this.slots[payload.id];
-                    this.updateUploadState(payload.id, newState);
+                    this.updateUploadState(payload.id, newState, payload);
                 })
             }
         } else if (entry.uploadState === CANCELLED && this.slots.hasOwnProperty(entry.id)) {
