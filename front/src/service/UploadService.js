@@ -50,7 +50,6 @@ UploadService.prototype.onStateChange = function(newState) {
             if (this.hasFreeSlot()) {
                 let fileUploader = new FileUploader(entry.id, entry.name, entry.fileType, entry.file);
                 this.slots[entry.id] = fileUploader;
-                console.log(this);
                 /**
                  * call send method which return a promise. when the promise is either solved or rejected
                  * update the state of the file
@@ -70,7 +69,6 @@ UploadService.prototype.onStateChange = function(newState) {
             }
         } else if (entry.uploadState === CANCELLED && this.slots.hasOwnProperty(entry.id)) {
             // the upload for this file has been cancelled. Abort the promise
-            console.log("Cancelled");
             const fileUploader = this.slots[entry.id];
             fileUploader.abort();
         }

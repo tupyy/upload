@@ -29,7 +29,7 @@ function FileUploader(id, filename, fileType, file) {
 }
 
 /**
- * Chain two promises. The first one sign the s3 url and the second upload the file
+ * Chain two promises. The first one sign the s3 url and the second upload the file.
  * @param signAPI
  * @return {Promise<promise | never>}
  */
@@ -44,7 +44,10 @@ FileUploader.prototype.send = function (signAPI) {
             console.log("reject with reason");
             reject({"id": this.id,
                     "reason": "aborted"}); // catch the abort or error
-        });
+        })
+        .then( () => {
+            resolve(this.id);
+        })
     });
     return this.promise;
 };

@@ -6,7 +6,11 @@ import {connect} from "react-redux";
 
 class MainProgressBar extends React.Component {
 
-    computeProgress = function() {
+    computeProgress = function () {
+        if (this.props.uploadGlobalState === false) {
+            return 0;
+        }
+
         if (this.props.uploadedBytes === 0 || this.props.totalBytes === 0) {
             return 0;
         }
@@ -14,23 +18,25 @@ class MainProgressBar extends React.Component {
     };
 
     render() {
-        const { classes } = this.props;
+        const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <LinearProgress variant="determinate" value={this.computeProgress()} />
+                <LinearProgress variant="determinate" value={this.computeProgress()}/>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => {
-   const uploadedBytes = state.files.global.uploadedBytes;
-   const totalBytes = state.files.global.totalBytes;
-   return {
-       uploadedBytes,
-       totalBytes
-   }
+    const uploadGlobalState = state.files.global.uploadGlobalState;
+    const uploadedBytes = state.files.global.uploadedBytes;
+    const totalBytes = state.files.global.totalBytes;
+    return {
+        uploadGlobalState,
+        uploadedBytes,
+        totalBytes
+    }
 
 };
 
-export default connect(mapStateToProps) (withStyles(styles)(MainProgressBar));
+export default connect(mapStateToProps)(withStyles(styles)(MainProgressBar));

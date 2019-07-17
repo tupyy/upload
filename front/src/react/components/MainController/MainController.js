@@ -47,14 +47,14 @@ class MainController extends React.Component {
                 <Button variant="contained" color="primary"
                         className={classes.button}
                         onClick={this.props.onStartUpload}
-                        disabled={this.props.uploadGlobalState || !this.props.canClearAll}
+                        disabled={this.props.uploadGlobalState || !this.props.hasFiles}
                 >
                     Upload
                 </Button>
                 <Button variant="contained"
                         color="secondary"
                         className={classes.button}
-                        disabled={!this.props.canClearAll && !this.props.uploadGlobalState}
+                        disabled={!this.props.hasFiles && !this.props.uploadGlobalState}
                         onClick={this.handleOnCancelClick}
                 >
                     {this.props.uploadGlobalState ? "Cancel" : "Clear all"}
@@ -79,8 +79,8 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = state => {
     return {
-        uploadGlobalState: state.files.uploadGlobalState,
-        canClearAll: state.files.files.length > 0
+        uploadGlobalState: state.files.global.uploadGlobalState,
+        hasFiles: state.files.files.length > 0
     };
 };
 

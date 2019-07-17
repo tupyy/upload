@@ -8,7 +8,7 @@ import {
     UPLOAD_ALL,
     UPLOAD_FILE
 } from "../actionTypes";
-import {CANCELLED, QUEUED, READY, UPLOADING} from "../uploadStateTypes";
+import {CANCELLED, DONE, QUEUED, READY, UPLOADING} from "../uploadStateTypes";
 let count = 0;
 
 const initialState = {
@@ -50,9 +50,9 @@ export default function (state = initialState, action) {
         case CLEAR_ALL:
             return initialState;
         case UPLOAD_ALL:
-            return onUploadStateChange(state, QUEUED);
+            return onUploadAll(state);
         case CANCEL_ALL:
-            return onUploadStateChange(state, CANCELLED);
+            return onCancelAll(state);
         case UPDATE_FILE_UPLOAD_PROGRESS:
             return onUpdateUploadFileProgress(state, action.id, action.value, action.rawValue);
         case UPDATE_FILE_UPLOAD_STATE:
@@ -86,13 +86,29 @@ function onDeleteFile(state, id) {
  * Handle for onUploadStateChange action
  * It loops through state and set the uploadStarted to true
  */
-function onUploadStateChange(state, uploadState) {
+function onUploadAll(state) {
     let newState = {};
     Object.assign(newState, state);
     newState.files.forEach((entry) => {
-        entry.uploadState = uploadState;
+        if (entry.uploadState !== DONE) {
+            entry.uploadState = QUEUED;
+        }
     });
-    newState.uploadGlobalState = uploadState;
+
+    newState.global.uploadGlobalState = true;
+    return newState;
+}
+
+function onCancelAll(state) {
+    let newState = {};
+    Object.assign(newState, state);
+    newState.files.forEach((entry) => {
+        if (entry.uploadState !== DONE) {
+            entry.uploadState = CANCELLED;
+        }
+    });
+
+    newState.global.uploadGlobalState = false;
     return newState;
 }
 
@@ -113,7 +129,7 @@ function onCancelUpload(state, id) {
     });
 
     if (countUploadingFiles(newState) === 0) {
-        newState.uploadGlobalState = false;
+        newState.global.uploadGlobalState = false;
     }
     return newState;
 }
@@ -140,7 +156,7 @@ function onUploadFile(state, id) {
         }
     });
 
-    newState.uploadGlobalState = true;
+    newState.global.uploadGlobalState = true;
 
     return newState;
 }
@@ -163,7 +179,6 @@ function onUpdateUploadFileProgress(state, id, value, rawValue) {
         }
     });
 
-    newState.global.uploadGlobalState = true;
     newState.global.uploadedBytes += rawValue;
 
     return newState;
@@ -181,8 +196,6 @@ function onUpdateFileState(state, id, uploadState) {
             }
         }
     });
-
-    newState.uploadGlobalState = true;
 
     return newState;
 }
