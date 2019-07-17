@@ -25,10 +25,6 @@ class FileUI extends React.Component {
         }
     }
 
-    isDisabled = function () {
-      return this.props.uploadState === DONE;
-    };
-
     canUpload = function () {
         return this.props.uploadState !== READY;
     };
@@ -61,7 +57,7 @@ class FileUI extends React.Component {
                                         <Button variant="contained"
                                                 color="primary"
                                                 className={style.button}
-                                                disabled={this.isDisabled()}
+                                                disabled={this.props.uploadState === DONE}
                                                 onClick={() => this.props.uploadFile(this.props.file.id)}
                                         >
                                             Upload
@@ -69,7 +65,9 @@ class FileUI extends React.Component {
                                         <Button variant="contained" color="secondary"
                                                 className={style.button}
                                                 onClick={this.handleDeleteButtonClick}
-                                                disabled={this.isDisabled()}
+                                                disabled={this.props.uploadState === DONE ||
+                                                          this.props.uploadState === CANCELLED
+                                                }
                                         >
                                             {this.canUpload() ? "Stop" : "Delete"}
                                         </Button>
