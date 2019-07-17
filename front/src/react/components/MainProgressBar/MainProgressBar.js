@@ -10,7 +10,7 @@ class MainProgressBar extends React.Component {
         if (this.props.uploadedBytes === 0 || this.props.totalBytes === 0) {
             return 0;
         }
-        return Math.round((this.props.uploadedBytes * 100) / this.props.totalBytes);
+        return Math.round((this.props.uploadedBytes * 100) / this.props.totalBytes)
     };
 
     render() {

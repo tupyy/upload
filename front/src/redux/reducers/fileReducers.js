@@ -36,7 +36,7 @@ export default function (state = initialState, action) {
                         uploadState: READY
                     }],
                 global: {
-                    totalBytes: state.global.totalBytes + action.file.length,
+                    totalBytes: state.global.totalBytes + action.file.size,
                     uploadedBytes: state.global.uploadedBytes,
                     uploadGlobalState: state.global.uploadGlobalState
                 }
@@ -54,7 +54,7 @@ export default function (state = initialState, action) {
         case CANCEL_ALL:
             return onUploadStateChange(state, READY);
         case UPDATE_FILE_UPLOAD_PROGRESS:
-            return onUpdateUploadFileProgress(state, action.id, action.value);
+            return onUpdateUploadFileProgress(state, action.id, action.value, action.rawValue);
         case UPDATE_FILE_UPLOAD_STATE:
             return onUpdateFileState(state, action.id, action.uploadState);
         default:
