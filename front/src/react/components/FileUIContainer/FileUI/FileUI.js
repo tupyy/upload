@@ -7,7 +7,7 @@ import Chip from '@material-ui/core/Chip';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {connect} from "react-redux";
 import {CancelUpload, DeleteFile, UploadFile} from "../../../../redux/actions";
-import {DONE, ERROR, READY} from "../../../../redux/uploadStateTypes";
+import {CANCELLED, DONE, ERROR, READY} from "../../../../redux/uploadStateTypes";
 
 import React from "react";
 
@@ -26,7 +26,9 @@ class FileUI extends React.Component {
     }
 
     isUploading = function () {
-        return this.props.uploadState !== READY && this.props.uploadState !== DONE;
+        return this.props.uploadState !== READY &&
+               this.props.uploadState !== DONE &&
+               this.props.uploadState !== CANCELLED;
     };
 
     render() {
@@ -97,6 +99,8 @@ function UploadChip(props) {
         return <Chip color="primary" style={{backgroundColor: 'green'}} label="Done"/>;
     } else if (props.uploadState === ERROR) {
         return <Chip color="primary" style={{backgroundColor: 'red'}} label="Error"/>;
+    } else if (props.uploadState === CANCELLED) {
+        return <Chip color="primary" style={{backgroundColor: 'orange'}} label="Cancelled"/>
     }
     return <div/>;
 }

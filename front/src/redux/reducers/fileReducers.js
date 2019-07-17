@@ -8,7 +8,7 @@ import {
     UPLOAD_ALL,
     UPLOAD_FILE
 } from "../actionTypes";
-import {QUEUED, READY} from "../uploadStateTypes";
+import {CANCELLED, QUEUED, READY, UPLOADING} from "../uploadStateTypes";
 let count = 0;
 
 const initialState = {
@@ -52,7 +52,7 @@ export default function (state = initialState, action) {
         case UPLOAD_ALL:
             return onUploadStateChange(state, QUEUED);
         case CANCEL_ALL:
-            return onUploadStateChange(state, READY);
+            return onUploadStateChange(state, CANCELLED);
         case UPDATE_FILE_UPLOAD_PROGRESS:
             return onUpdateUploadFileProgress(state, action.id, action.value, action.rawValue);
         case UPDATE_FILE_UPLOAD_STATE:
@@ -108,7 +108,7 @@ function onCancelUpload(state, id) {
 
     newState.files.forEach((fileEntry) => {
         if (fileEntry.id === id) {
-            fileEntry.uploadState = READY;
+            fileEntry.uploadState = CANCELLED;
         }
     });
 
@@ -122,7 +122,7 @@ function countUploadingFiles(state) {
 
     let countUploadingFiles = 0;
     state.files.forEach((fileEntry) => {
-        if (fileEntry.uploadState === true) {
+        if (fileEntry.uploadState === UPLOADING || fileEntry.uploadState === QUEUED) {
             countUploadingFiles++;
         }
     });

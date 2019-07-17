@@ -1,7 +1,7 @@
 import store from '../redux/store';
 import watch from 'redux-watch';
 import FileUploader from './FileUploader';
-import {DONE, ERROR, QUEUED, READY, UPLOADING} from "../redux/uploadStateTypes";
+import {CANCELLED, DONE, ERROR, QUEUED, UPLOADING} from "../redux/uploadStateTypes";
 import {UpdateUploadState} from "../redux/actions";
 
 const signAPI = "http://localhost:5000/sign-s3";
@@ -39,9 +39,8 @@ UploadService.prototype.hasFreeSlot = function() {
 };
 
 /**
- * Handle for state change event. It loops through files and check if new uploads have been started/cancelled
- * If there is a free slot, it starts the upload immediately else it put a new {@link FileUploader} in the uploading
- * queue
+ * Handle for state change event.
+ * When the store has been updated, it checks if there are free slots and if true it starts the upload.
  * @param newState new state
  */
 UploadService.prototype.onStateChange = function(newState) {
@@ -51,6 +50,7 @@ UploadService.prototype.onStateChange = function(newState) {
             if (this.hasFreeSlot()) {
                 let fileUploader = new FileUploader(entry.id, entry.name, entry.fileType, entry.file);
                 this.slots[entry.id] = fileUploader;
+                console.log(this);
                 /**
                  * call send method which return a promise. when the promise is either solved or rejected
                  * update the state of the file
@@ -59,20 +59,19 @@ UploadService.prototype.onStateChange = function(newState) {
                 let promise = fileUploader.send(signAPI);
 
                 promise.then(id => {
-                    delete this.slots[entry.id];
+                    delete this.slots[id];
                     this.updateUploadState(id, DONE);
                 }).catch( (id, reason) => {
-                    console.log(reason);
-                    delete this.slots[entry.id];
-                    this.updateUploadState(id, ERROR);
+                    let newState = this.slots[id].hasBeenAborted === true ? CANCELLED : ERROR;
+                    delete this.slots[id];
+                    this.updateUploadState(id, newState);
                 })
             }
-        } else if (entry.uploadState === READY && this.slots.hasOwnProperty(entry.id)) {
+        } else if (entry.uploadState === CANCELLED && this.slots.hasOwnProperty(entry.id)) {
             // the upload for this file has been cancelled. Abort the promise
+            console.log("Cancelled");
             const fileUploader = this.slots[entry.id];
             fileUploader.abort();
-            delete this.slots[entry.id];
-            this.updateUploadState(entry.id, READY);
         }
     })
 };

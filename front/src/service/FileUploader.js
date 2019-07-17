@@ -13,6 +13,12 @@ function FileUploader(id, filename, fileType, file) {
     // uploaded since the last time
     this.lastUploadedBytesValue = 0;
 
+    //XHR promise
+    this.promise = undefined;
+
+    //true if the upload has been aborted
+    this.hasBeenAborted = false;
+
     //XHR object. Set by the send function. Useful when cancelling the upload..
     this.xhr = undefined;
 
@@ -28,15 +34,21 @@ function FileUploader(id, filename, fileType, file) {
  * @return {Promise<promise | never>}
  */
 FileUploader.prototype.send = function (signAPI) {
-    return this.sign(signAPI).then((signedURL) => {
-        return signedURL;
-    })
+    this.promise = new Promise( (resolve, reject) => {
+        this.sign(signAPI).then((signedURL) => {
+            return signedURL;
+        })
         .then(signedURL => {
             return this.uploadFile(signedURL);
+        }).catch(() => {
+            reject(this.id); // catch the abort or error
         });
+    });
+    return this.promise;
 };
 
 FileUploader.prototype.abort = function () {
+    this.hasBeenAborted = true;
     this.xhr.abort();
 };
 /**
@@ -45,7 +57,7 @@ FileUploader.prototype.abort = function () {
  */
 FileUploader.prototype.uploadFile = function (signedURL) {
     const self = this;
-    let promise = new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
         self.xhr = new XMLHttpRequest();
 
         self.xhr.upload.addEventListener("progress", function (e) {
@@ -73,7 +85,6 @@ FileUploader.prototype.uploadFile = function (signedURL) {
 
         self.xhr.send(this.file);
     });
-    return promise;
 };
 
 FileUploader.prototype.sign = function (signingApi) {
