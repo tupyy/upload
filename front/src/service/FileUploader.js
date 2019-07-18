@@ -45,6 +45,11 @@ function FileUploader(id, filename, fileType, file) {
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/json");
 
+        const csrfToken = document.getElementsByName('csrfmiddlewaretoken')
+        if (csrfToken[0] !== undefined) {
+            xhr.setRequestHeader('X-CSRFToken', csrfToken[0].value);
+        }
+
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                 resolve(xhr.responseText);
@@ -76,11 +81,11 @@ FileUploader.prototype.send = function (signAPI, saveAPI) {
             return signedURL;
         })
         .then(signedURL => {
-            return this.uploadFile(signedURL);
-        }).catch(() => {
-            console.log("reject with reason");
-            reject({"id": this.id,
-                    "reason": "aborted"}); // catch the abort or error
+            const data = JSON.parse(signedURL);
+            return this.uploadFile(data.url);
+        }).catch((reason) => {
+            console.log(reason);
+            reject(reason); // catch the abort or error
         })
         .then( () => {
             return this.save(saveAPI);
