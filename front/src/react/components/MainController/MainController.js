@@ -6,7 +6,7 @@ import {AddFile, CancelAll, ClearAll, UploadAll} from "../../../redux/actions";
 import {BottomNavigation} from "@material-ui/core";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBroom, faCloudUploadAlt, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faBroom, faCloudUploadAlt, faPlusCircle, faStopCircle} from "@fortawesome/free-solid-svg-icons";
 import styles from "./MainController.style";
 import withStyles from "@material-ui/core/styles/withStyles";
 import cssStyle from "./MainController.module.css";
@@ -48,6 +48,10 @@ class MainController extends React.Component {
 
     isUploadDisabled() {
         return this.props.uploadGlobalState || !this.props.hasFiles ? cssStyle.disabled : "";
+    }
+
+    getStopIcon() {
+        return this.props.uploadGlobalState ? faStopCircle : faBroom;
     }
 
     render() {
@@ -105,7 +109,7 @@ class MainController extends React.Component {
                             className={[classes.bottomAction,this.isStopDisabled()].join(' ')}
                             disabled={!this.props.hasFiles && !this.props.uploadGlobalState}
                             onClick={this.handleOnCancelClick}
-                            icon={<FontAwesomeIcon icon={faBroom} className={classes.icon}/>} />
+                            icon={<FontAwesomeIcon icon={this.getStopIcon()} className={classes.icon}/>} />
                     </BottomNavigation>
                 </MediaQuery>
             </div>
