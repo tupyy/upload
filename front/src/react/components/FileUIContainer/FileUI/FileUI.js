@@ -17,7 +17,7 @@ class FileUI extends React.Component {
         this.handleDeleteButtonClick = this.handleDeleteButtonClick.bind(this);
     }
 
-    handleDeleteButtonClick(event) {
+    handleDeleteButtonClick() {
         if (this.isUploading()) {
             this.props.cancelUpload(this.props.file.id);
         } else {
