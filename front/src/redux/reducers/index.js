@@ -1,6 +1,8 @@
 import {combineReducers} from 'redux';
-import files from './fileReducers';
+import fileReducer from './fileReducers';
 
-export default combineReducers({
-    files
+const appReducer = combineReducers({
+    files: fileReducer,
 });
+
+export default appReducer;
