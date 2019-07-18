@@ -13,6 +13,21 @@ const styles = theme => ({
     input: {
         display: 'none',
     },
+    rootBottom : {
+        color: 'black',
+        labelColor: 'black',
+        width: '100%',
+        position: 'fixed',
+        bottom: 0,
+    },
+    bottomAction: {
+      color: '#0061ff'
+    },
+
+    icon: {
+        fontSize: '25px',
+        marginBottom: '10px'
+    }
 });
 
 export default styles;

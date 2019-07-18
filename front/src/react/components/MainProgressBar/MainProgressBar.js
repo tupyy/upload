@@ -17,7 +17,10 @@ class MainProgressBar extends React.Component {
         const {classes} = this.props;
         return (
             <div className={classes.root}>
-                <LinearProgress variant="determinate" value={this.computeProgress()}/>
+                <LinearProgress
+                    className={classes.progressBar}
+                    variant="determinate"
+                    value={this.computeProgress()}/>
             </div>
         );
     }

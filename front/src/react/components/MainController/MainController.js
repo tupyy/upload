@@ -1,9 +1,15 @@
 import React from 'react';
-import styles from "./MainController.style";
-import Button from "@material-ui/core/Button";
-import withStyles from "@material-ui/core/styles/withStyles";
+import MediaQuery from 'react-responsive';
 import {connect} from "react-redux";
+import Button from "@material-ui/core/Button";
 import {AddFile, CancelAll, ClearAll, UploadAll} from "../../../redux/actions";
+import {BottomNavigation} from "@material-ui/core";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBroom, faCloudUploadAlt, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import styles from "./MainController.style";
+import withStyles from "@material-ui/core/styles/withStyles";
+import cssStyle from "./MainController.module.css";
 
 class MainController extends React.Component {
     constructor(props) {
@@ -36,29 +42,72 @@ class MainController extends React.Component {
         }
     }
 
+    isStopDisabled() {
+        return !this.props.hasFiles && !this.props.uploadGlobalState ? cssStyle.disabled : "";
+    }
+
+    isUploadDisabled() {
+        return this.props.uploadGlobalState || !this.props.hasFiles ? cssStyle.disabled : "";
+    }
+
     render() {
         const { classes } = this.props;
+
         return (
             <div className={classes.root}>
-                <Button variant="contained" color="primary" onClick={this.handleClick} className={classes.button}>
-                    Add
-                    <input type="file" name="files[]" ref={this.inputRef} onChange={this.handleChange} multiple className={classes.input}/>
-                </Button>
-                <Button variant="contained" color="primary"
+                <input type="file" name="files[]"
+                       ref={this.inputRef}
+                       onChange={this.handleChange}
+                       multiple className={classes.input}/>
+                <MediaQuery minDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
+                    <Button variant="contained"
+                            color="primary"
+                            onClick={this.handleClick}
+                            className={classes.button}>
+                        Add
+                    </Button>
+                    <Button variant="contained" color="primary"
                         className={classes.button}
                         onClick={this.props.onStartUpload}
                         disabled={this.props.uploadGlobalState || !this.props.hasFiles}
-                >
-                    Upload
-                </Button>
-                <Button variant="contained"
+                        >
+                        Upload
+                    </Button>
+                    <Button variant="contained"
                         color="secondary"
                         className={classes.button}
                         disabled={!this.props.hasFiles && !this.props.uploadGlobalState}
                         onClick={this.handleOnCancelClick}
-                >
-                    {this.props.uploadGlobalState ? "Cancel" : "Clear all"}
-                </Button>
+                        >
+                        {this.props.uploadGlobalState ? "Cancel" : "Clear all"}
+                    </Button>
+                </MediaQuery>
+                <MediaQuery maxDeviceWidth={1224} device={{ deviceWidth: 1600 }}>
+                    <BottomNavigation
+                        className={classes.rootBottom}
+                        showLabels={true}
+                        selectedIndex="1"
+                    >
+                        <BottomNavigationAction
+                            label="Add images"
+                            labelColor="red"
+                            className={classes.bottomAction}
+                            onClick={this.handleClick}
+                            icon={<FontAwesomeIcon icon={faPlusCircle} className={classes.icon}/>} />
+                        <BottomNavigationAction
+                            label="Upload"
+                            onClick={this.props.onStartUpload}
+                            className={[classes.bottomAction,this.isUploadDisabled()].join(' ')}
+                            disabled={this.props.uploadGlobalState || !this.props.hasFiles}
+                            icon={<FontAwesomeIcon icon={faCloudUploadAlt} className={classes.icon}/>} />
+                        <BottomNavigationAction
+                            label={this.props.uploadGlobalState ? "Cancel" : "Clear all"}
+                            className={[classes.bottomAction,this.isStopDisabled()].join(' ')}
+                            disabled={!this.props.hasFiles && !this.props.uploadGlobalState}
+                            onClick={this.handleOnCancelClick}
+                            icon={<FontAwesomeIcon icon={faBroom} className={classes.icon}/>} />
+                    </BottomNavigation>
+                </MediaQuery>
             </div>
         );
     }
